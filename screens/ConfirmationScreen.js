@@ -53,6 +53,7 @@ const ConfirmationScreen = () => {
         paymentMethod: selectedOption,
       };
 
+      console.log(JSON.stringify(orderData))
       const response = await axios.post(
         "http://localhost:8000/orders",
         orderData

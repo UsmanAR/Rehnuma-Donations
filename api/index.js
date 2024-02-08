@@ -9,6 +9,10 @@ const port = 8000;
 const cors = require("cors");
 app.use(cors());
 
+// Importing models
+const Donor = require("./models/donors")
+const Beneficiary = require("./models/beneficiary")
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -17,17 +21,14 @@ app.listen(port, () => {
   console.log("Server is running on port 8000");
 });
 
-mongoose
-  .connect("mongodb+srv://sujananand:sujan@cluster0.cueelai.mongodb.net/", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((err) => {
-    console.log("Error connecting to MongoDb", err);
-  });
+mongoose.connect("mongodb://localhost:27017/Rehnuma", {
+
+}).then(() => {
+    console.log("connected to Mongodb")
+}).catch((err) => {
+    console.log("error connecting to Mongodb", err)
+
+})
 
 const User = require("./models/user");
 const Order = require("./models/order");
@@ -38,8 +39,8 @@ const sendVerificationEmail = async (email, verificationToken) => {
     // Configure the email service or SMTP details here
     service: "gmail",
     auth: {
-      user: "sujananand0@gmail.com",
-      pass: "wkkjjprzkqxtboju",
+      user: "elcidtang@gmail.com",
+      pass: "pxsaxwvrpbazmjlq"
     },
   });
 
@@ -262,5 +263,29 @@ app.get("/orders/:userId",async(req,res) => {
     res.status(200).json({ orders });
   } catch(error){
     res.status(500).json({ message: "Error"});
+  }
+})
+
+// Get students List
+
+app.get("/students",async (req,res)=>{
+  try{
+    const beneficiaries = await Beneficiary.find({});
+      if(beneficiaries==""){
+        res.status(200).json({
+          message:"No students found"
+        })
+      }
+      else{
+        res.status(200).json({
+          beneficiaries
+        });
+
+      }
+    }
+  catch(error){
+    res.status(500).json({
+      errorMessage:error.message
+    });
   }
 })

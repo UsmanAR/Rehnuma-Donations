@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Pressable, Image } from "react-native";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../redux/CartReducer";
+import { useNavigation } from "@react-navigation/native";
 
 const ProductItem = ({ item }) => {
   const [addedToCart, setAddedToCart] = useState(false);
@@ -13,6 +14,7 @@ const ProductItem = ({ item }) => {
       setAddedToCart(false);
     }, 60000);
   };
+  const navigation = useNavigation();
   return (
     <Pressable style={{ marginHorizontal: 20, marginVertical: 25 }}>
       <Image
@@ -21,7 +23,7 @@ const ProductItem = ({ item }) => {
       />
 
       <Text numberOfLines={1} style={{ width: 150, marginTop: 10 }}>
-        {item?.title}
+        {item?.name?.firstName}
       </Text>
 
       <View
@@ -32,14 +34,14 @@ const ProductItem = ({ item }) => {
           justifyContent: "space-between",
         }}
       >
-        <Text style={{ fontSize: 15, fontWeight: "bold" }}>₹{item?.price}</Text>
+        <Text style={{ fontSize: 15, fontWeight: "bold" }}>₹{item?.donationStatus?.amountPending}</Text>
         <Text style={{ color: "#FFC72C", fontWeight: "bold" }}>
-          {item?.rating?.rate} ratings
+          {item?.donationStatus?.status} 
         </Text>
       </View>
 
       <Pressable
-        onPress={() => addItemToCart(item)}
+        onPress={() =>  navigation.navigate("Confirm") }  //addItemToCart(item)}
         style={{
           backgroundColor: "#FFC72C",
           padding: 10,
@@ -55,7 +57,7 @@ const ProductItem = ({ item }) => {
             <Text>Added to Cart</Text>
           </View>
         ) : (
-          <Text>Add to Cart</Text>
+          <Text>Donate</Text>
         )}
       </Pressable>
     </Pressable>

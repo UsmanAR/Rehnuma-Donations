@@ -9,13 +9,15 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import ProductInfoScreen from "../screens/ProductInfoScreen";
+
 import AddAddressScreen from "../screens/AddAddressScreen";
 import AddressScreen from "../screens/AddressScreen";
 import CartScreen from "../screens/CartScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
+
+import StudentInfoScreen from "../screens/StudentInfoScreen";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -73,8 +75,8 @@ const StackNavigator = () => {
     );
   }
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
+    <NavigationContainer >
+      <Stack.Navigator >
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -92,7 +94,7 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name="Info"
-          component={ProductInfoScreen}
+          component={StudentInfoScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

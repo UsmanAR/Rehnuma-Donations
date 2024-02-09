@@ -29,6 +29,7 @@ import jwt_decode from "jwt-decode";
 import img from '../assets/image.jpg'
 import ProgressBar  from 'react-native-progress/Bar'
 import {Svg,Rect} from 'react-native-svg'
+import Card from "../components/Card";
 
 
 // const fetchData = async () => {
@@ -40,16 +41,16 @@ import {Svg,Rect} from 'react-native-svg'
 //   }
 // };
 
-const fetchBeneficiaries = async () => {
-  try {
-    const response = await axios.get("http://localhost:8000/students");
-    console.log("The students are " + JSON.stringify(response));
+// const fetchBeneficiaries = async () => {
+//   try {
+//     const response = await axios.get("http://localhost:8000/students");
+//     console.log("The students are " + JSON.stringify(response));
 
-  } catch (error) {
-    console.log("Couldnt fetch students ", error)
-  }
-}
-fetchBeneficiaries()
+//   } catch (error) {
+//     console.log("Couldnt fetch students ", error)
+//   }
+// }
+// fetchBeneficiaries()
 const HomeScreen = () => {
   const list = [
     {
@@ -65,11 +66,11 @@ const HomeScreen = () => {
     }
   ];
   const images = [
-    img, img, img
+    img, img, img, img, img, img, img, img, img
   ];
 
 
-  const [products, setProducts] = useState([]);
+  const [students, setStudents] = useState([]);
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [addresses, setAddresses] = useState([]);
@@ -92,7 +93,7 @@ const HomeScreen = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:8000/students");
-        setProducts(response.data.beneficiaries);
+        setStudents(response.data.beneficiaries);
       } catch (error) {
       }
     };
@@ -125,6 +126,8 @@ const HomeScreen = () => {
 
     fetchUser();
   }, []);
+
+  console.log(students)
   return (
     <>
       <SafeAreaView
@@ -183,7 +186,13 @@ const HomeScreen = () => {
 
             <ScrollView  style={ styles.shadowProp} >
 
-              <SliderBox images={images} circleloop dotColor={'#13274F'} inactivedotColor={'#90A4ae'} ImageComponentStyle={{ width: '100%' }} />
+              <SliderBox images={images} 
+              autoplay
+              circleloop 
+              paginationBoxVerticalPadding={20}
+              dotColor={"white"}
+              inactiveDotColor={"#9084ae"}
+              ImageComponentStyle={{ width: '100%' }} />
 
             </ScrollView>
        
@@ -200,250 +209,103 @@ const HomeScreen = () => {
             
           </ScrollView>
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
-          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
-          <View style={{marginHorizontal:18}}>
+          <ScrollView horizontal  showsHorizontalScrollIndicator={false}  style={{ flex: 1, flexDirection: "column", gap: 5, paddingVertical: 10, paddingHorizontal: 10 }}>
+          
 
-          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
-          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
-          <View style={{marginVertical:10}}>
-
-<ProgressBar progress={0.5} 
-color='#580ff5'
-width={200}
-height={10}
-borderRadius={10}
-
-
-
- />
-          </View>
-<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
-
-
-          <View style={{flexDirection:"row"}}>
-            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
-            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
-          </View>
-          <Pressable
-         
-          style={{
-            backgroundColor: "#580ff5",
-            borderRadius: 6,
-            padding: 7,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            Donate Now
-          </Text>
-        </Pressable>
-         
-          </View>
-          </View>
-            </View>
-            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
-          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
-          <View style={{marginHorizontal:18}}>
-
-          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
-          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
-          <View style={{marginVertical:10}}>
-
-<ProgressBar progress={0.5} 
-color='#580ff5'
-width={200}
-height={10}
-borderRadius={10}
-
-
-
- />
-          </View>
-<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
-
-
-          <View style={{flexDirection:"row"}}>
-            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
-            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
-          </View>
-          <Pressable
-         
-          style={{
-            backgroundColor: "#580ff5",
-            borderRadius: 6,
-            padding: 7,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            Donate Now
-          </Text>
-        </Pressable>
-         
-          </View>
-          </View>
-            </View>
-            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
-          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
-          <View style={{marginHorizontal:18}}>
-
-          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
-          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
-          <View style={{marginVertical:10}}>
-
-<ProgressBar progress={0.5} 
-color='#580ff5'
-width={200}
-height={10}
-borderRadius={10}
-
-
-
- />
-          </View>
-<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
-
-
-          <View style={{flexDirection:"row"}}>
-            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
-            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
-          </View>
-          <Pressable
-         
-          style={{
-            backgroundColor: "#580ff5",
-            borderRadius: 6,
-            padding: 7,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            Donate Now
-          </Text>
-        </Pressable>
-         
-          </View>
-          </View>
-            </View>
-            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
-          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
-          <View style={{marginHorizontal:18}}>
-
-          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
-          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
-          <View style={{marginVertical:10}}>
-
-<ProgressBar progress={0.5} 
-color='#580ff5'
-width={200}
-height={10}
-borderRadius={10}
-
-
-
- />
-          </View>
-<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
-
-
-          <View style={{flexDirection:"row"}}>
-            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
-            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
-          </View>
-          <Pressable
-         
-          style={{
-            backgroundColor: "#580ff5",
-            borderRadius: 6,
-            padding: 7,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            Donate Now
-          </Text>
-        </Pressable>
-         
-          </View>
-          </View>
-            </View>
-            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
-          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
-          <View style={{marginHorizontal:18}}>
-
-          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
-          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
-          <View style={{marginVertical:10}}>
-
-<ProgressBar progress={0.5} 
-color='#580ff5'
-width={200}
-height={10}
-borderRadius={10}
-
-
-
- />
-          </View>
-<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
-
-
-          <View style={{flexDirection:"row"}}>
-            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
-            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
-          </View>
-          <Pressable
-         
-          style={{
-            backgroundColor: "#580ff5",
-            borderRadius: 6,
-            padding: 7,
-          }}
-        >
-          <Text
-            style={{
-              textAlign: "center",
-              color: "white",
-              fontSize: 14,
-              fontWeight: "bold",
-            }}
-          >
-            Donate Now
-          </Text>
-        </Pressable>
-         
-          </View>
-          </View>
-            </View>
+ {
+students.length>0 &&(
+  students.map((data,index) =>{
+   return <Card key={index} data= {data} />
+  })
+)
+ }
             
 
 
+          </ScrollView>
+
+          {/* <View
+            style={{
+              marginHorizontal: 10,
+              marginTop: 20,
+              width: "45%",
+              marginBottom: open ? 50 : 15,
+            }}
+          >
+            <DropDownPicker
+              style={{
+                borderColor: "#B7B7B7",
+                height: 30,
+                marginBottom: open ? 120 : 15,
+              }}
+              open={open}
+              value={category} //genderValue
+              items={items}
+              setOpen={setOpen}
+              setValue={setCategory}
+              setItems={setItems}
+              placeholder="choose category"
+              placeholderStyle={styles.placeholderStyles}
+              onOpen={onGenderOpen}
+              // onChangeValue={onChange}
+              zIndex={3000}
+              zIndexInverse={1000}
+            />
+          </View> */}
+
+          <ScrollView>
+            <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
+              <Text style={{fontSize:18,fontWeight:700,color:'balck'}}>Engineers</Text>
+            <Pressable style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+              <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
+              <MaterialIcons name="arrow-right" size={30} color="black" />
+            </Pressable>
+
+            </View>
+            
+          </ScrollView>
+          <ScrollView horizontal  showsHorizontalScrollIndicator={false}  style={{ flex: 1, flexDirection: "column", gap: 5, paddingVertical: 10, paddingHorizontal: 10 }}>
+
+       
+            {/* {products
+              ?.filter((item) => item.field === category)
+              .map((item, index) => (
+                <ProductItem item={item} key={index} />
+              ))} */}
+                {/* <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card /> */}
+    
+          </ScrollView>
+          <ScrollView>
+            <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
+              <Text style={{fontSize:18,fontWeight:700,color:'balck'}}>Doctors</Text>
+            <Pressable style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+              <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
+              <MaterialIcons name="arrow-right" size={30} color="black" />
+            </Pressable>
+
+            </View>
+            
+          </ScrollView>
+          <ScrollView horizontal  showsHorizontalScrollIndicator={false}  style={{ flex: 1, flexDirection: "column", gap: 5, paddingVertical: 10, paddingHorizontal: 10 }}>
+
+       
+            {/* {products
+              ?.filter((item) => item.field === category)
+              .map((item, index) => (
+                <ProductItem item={item} key={index} />
+              ))} */}
+                {/* <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card />
+                <Card /> */}
+    
           </ScrollView>
           </ScrollView>
 
@@ -559,57 +421,6 @@ borderRadius={10}
 
           </ScrollView> */}
 
-          <Text
-            style={{
-              height: 1,
-              borderColor: "#D0D0D0",
-              borderWidth: 2,
-              marginTop: 15,
-            }}
-          />
-
-          <View
-            style={{
-              marginHorizontal: 10,
-              marginTop: 20,
-              width: "45%",
-              marginBottom: open ? 50 : 15,
-            }}
-          >
-            <DropDownPicker
-              style={{
-                borderColor: "#B7B7B7",
-                height: 30,
-                marginBottom: open ? 120 : 15,
-              }}
-              open={open}
-              value={category} //genderValue
-              items={items}
-              setOpen={setOpen}
-              setValue={setCategory}
-              setItems={setItems}
-              placeholder="choose category"
-              placeholderStyle={styles.placeholderStyles}
-              onOpen={onGenderOpen}
-              // onChangeValue={onChange}
-              zIndex={3000}
-              zIndexInverse={1000}
-            />
-          </View>
-
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
-            {products
-              ?.filter((item) => item.field === category)
-              .map((item, index) => (
-                <ProductItem item={item} key={index} />
-              ))}
-          </View>
         </ScrollView>
       </SafeAreaView>
 

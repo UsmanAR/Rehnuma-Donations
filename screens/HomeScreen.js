@@ -8,6 +8,7 @@ import {
   Pressable,
   TextInput,
   Image,
+  ProgressBarAndroid,
 } from "react-native";
 import React, { useState, useEffect, useCallback, useContext } from "react";
 import { Feather } from "@expo/vector-icons";
@@ -25,6 +26,10 @@ import { BottomModal, SlideAnimation, ModalContent } from "react-native-modals";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { UserType } from "../UserContext";
 import jwt_decode from "jwt-decode";
+import img from '../assets/image.jpg'
+import ProgressBar  from 'react-native-progress/Bar'
+import {Svg,Rect} from 'react-native-svg'
+
 
 // const fetchData = async () => {
 //   try {
@@ -35,13 +40,13 @@ import jwt_decode from "jwt-decode";
 //   }
 // };
 
-const fetchBeneficiaries = async () =>{
-  try{
+const fetchBeneficiaries = async () => {
+  try {
     const response = await axios.get("http://localhost:8000/students");
     console.log("The students are " + JSON.stringify(response));
 
-  }catch(error){
-    console.log("Couldnt fetch students ",error)
+  } catch (error) {
+    console.log("Couldnt fetch students ", error)
   }
 }
 fetchBeneficiaries()
@@ -60,29 +65,27 @@ const HomeScreen = () => {
     }
   ];
   const images = [
-    "https://img.etimg.com/thumb/msid-93051525,width-1070,height-580,imgsize-2243475,overlay-economictimes/photo.jpg",
-    "https://images-eu.ssl-images-amazon.com/images/G/31/img22/Wireless/devjyoti/PD23/Launches/Updated_ingress1242x550_3.gif",
-    "https://images-eu.ssl-images-amazon.com/images/G/31/img23/Books/BB/JULY/1242x550_Header-BB-Jul23.jpg",
+    img, img, img
   ];
-  
- 
+
+
   const [products, setProducts] = useState([]);
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
   const [addresses, setAddresses] = useState([]);
   const [category, setCategory] = useState("Engineering");
   const { userId, setUserId } = useContext(UserType);
-  const [selectedAddress,setSelectedAdress] = useState("");
+  const [selectedAddress, setSelectedAdress] = useState("");
   const [items, setItems] = useState([
     { label: "Engineering", value: "Engineering" },
     { label: "Medical", value: "Medical" },
   ]);
-  
-  
+
+
   const onGenderOpen = useCallback(() => {
     setCompanyOpen(false);
   }, []);
-  
+
   const cart = useSelector((state) => state.cart.cart);
   const [modalVisible, setModalVisible] = useState(false);
   useEffect(() => {
@@ -93,7 +96,7 @@ const HomeScreen = () => {
       } catch (error) {
       }
     };
-  
+
     fetchData();
   }, []);
   useEffect(() => {
@@ -105,7 +108,7 @@ const HomeScreen = () => {
     try {
       const response = await axios.get(
         `http://localhost:8000/addresses/${userId}`
-        );
+      );
       const { addresses } = response.data;
 
       setAddresses(addresses);
@@ -126,20 +129,338 @@ const HomeScreen = () => {
     <>
       <SafeAreaView
         style={{
-          paddinTop: Platform.OS === "android" ? 40 : 0,
           flex: 1,
           backgroundColor: "white",
         }}
       >
         <ScrollView>
-          <View
+
+          <ScrollView style={{ flex: 1, flexDirection: "column", gap: 5, paddingVertical: 10, paddingHorizontal: 10 }}>
+
+
+            <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
+
+              <View>
+                <Text style={{ fontWeight: 600 }}>Hello !</Text>
+                <Text style={{ fontWeight: 900, fontSize: 20 }}>Ibrahim</Text>
+              </View>
+
+              <AntDesign
+                style={{ paddingLeft: 10 }}
+                name="search1"
+                size={22}
+                color="#580ff5"
+              />
+
+            </View>
+
+            <Pressable
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginHorizontal: 7,
+                gap: 10,
+                backgroundColor: "#f0f0f0",
+                marginVertical: 20,
+                marginHorizontal: 15,
+                borderRadius: 3,
+                height: 38,
+                flex: 1,
+                paddingVertical: 5,
+                borderRadius: 15
+
+
+              }}
+            >
+              <AntDesign
+                style={{ paddingLeft: 10 }}
+                name="search1"
+                size={22}
+                color="black"
+              />
+              <TextInput placeholder="Search Students..." style={{ width: "100%", padding: 10, outline: 'none' }} />
+            </Pressable>
+
+            <ScrollView  style={ styles.shadowProp} >
+
+              <SliderBox images={images} circleloop dotColor={'#13274F'} inactivedotColor={'#90A4ae'} ImageComponentStyle={{ width: '100%' }} />
+
+            </ScrollView>
+       
+
+          <ScrollView>
+            <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
+              <Text style={{fontSize:18,fontWeight:700,color:'balck'}}>Donations</Text>
+            <Pressable style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+              <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
+              <MaterialIcons name="arrow-right" size={30} color="black" />
+            </Pressable>
+
+            </View>
+            
+          </ScrollView>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
+          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
+          <View style={{marginHorizontal:18}}>
+
+          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
+          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
+          <View style={{marginVertical:10}}>
+
+<ProgressBar progress={0.5} 
+color='#580ff5'
+width={200}
+height={10}
+borderRadius={10}
+
+
+
+ />
+          </View>
+<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+
+
+          <View style={{flexDirection:"row"}}>
+            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
+            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
+          </View>
+          <Pressable
+         
+          style={{
+            backgroundColor: "#580ff5",
+            borderRadius: 6,
+            padding: 7,
+          }}
+        >
+          <Text
             style={{
-              backgroundColor: "#00CED1",
-              padding: 10,
-              flexDirection: "row",
+              textAlign: "center",
+              color: "white",
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            Donate Now
+          </Text>
+        </Pressable>
+         
+          </View>
+          </View>
+            </View>
+            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
+          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
+          <View style={{marginHorizontal:18}}>
+
+          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
+          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
+          <View style={{marginVertical:10}}>
+
+<ProgressBar progress={0.5} 
+color='#580ff5'
+width={200}
+height={10}
+borderRadius={10}
+
+
+
+ />
+          </View>
+<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+
+
+          <View style={{flexDirection:"row"}}>
+            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
+            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
+          </View>
+          <Pressable
+         
+          style={{
+            backgroundColor: "#580ff5",
+            borderRadius: 6,
+            padding: 7,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            Donate Now
+          </Text>
+        </Pressable>
+         
+          </View>
+          </View>
+            </View>
+            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
+          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
+          <View style={{marginHorizontal:18}}>
+
+          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
+          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
+          <View style={{marginVertical:10}}>
+
+<ProgressBar progress={0.5} 
+color='#580ff5'
+width={200}
+height={10}
+borderRadius={10}
+
+
+
+ />
+          </View>
+<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+
+
+          <View style={{flexDirection:"row"}}>
+            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
+            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
+          </View>
+          <Pressable
+         
+          style={{
+            backgroundColor: "#580ff5",
+            borderRadius: 6,
+            padding: 7,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            Donate Now
+          </Text>
+        </Pressable>
+         
+          </View>
+          </View>
+            </View>
+            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
+          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
+          <View style={{marginHorizontal:18}}>
+
+          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
+          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
+          <View style={{marginVertical:10}}>
+
+<ProgressBar progress={0.5} 
+color='#580ff5'
+width={200}
+height={10}
+borderRadius={10}
+
+
+
+ />
+          </View>
+<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+
+
+          <View style={{flexDirection:"row"}}>
+            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
+            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
+          </View>
+          <Pressable
+         
+          style={{
+            backgroundColor: "#580ff5",
+            borderRadius: 6,
+            padding: 7,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            Donate Now
+          </Text>
+        </Pressable>
+         
+          </View>
+          </View>
+            </View>
+            <View  style={ [styles.CardProp,{flexDirection:'column',width:250,height:350}]}>
+          <Image source={img} style={{width:220,height:150,margin:18,borderRadius:10}} />
+          <View style={{marginHorizontal:18}}>
+
+          <Text style={{fontWeight:700,fontSize:15}}>Usman Raheem Shaikh</Text>
+          <Text style={{fontWeight:500,fontSize:12, marginVertical:5,color:"#C0C0C0"}}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
+          <View style={{marginVertical:10}}>
+
+<ProgressBar progress={0.5} 
+color='#580ff5'
+width={200}
+height={10}
+borderRadius={10}
+
+
+
+ />
+          </View>
+<View style={{flexDirection:'row', justifyContent:"space-between", alignItems:'center'}}>
+
+
+          <View style={{flexDirection:"row"}}>
+            <Text style={{color:'#580ff5', fontWeight:700,marginHorizontal:5}}>$100</Text>
+            <Text style={{fontWeight:500,color:"#C0C0C0"}}>Collected</Text>
+          </View>
+          <Pressable
+         
+          style={{
+            backgroundColor: "#580ff5",
+            borderRadius: 6,
+            padding: 7,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              color: "white",
+              fontSize: 14,
+              fontWeight: "bold",
+            }}
+          >
+            Donate Now
+          </Text>
+        </Pressable>
+         
+          </View>
+          </View>
+            </View>
+            
+
+
+          </ScrollView>
+          </ScrollView>
+
+          {/* <View
+            style={{
+              backgroundColor: "#fffff",
+              paddingVertical:20,
+             flex:1,
+              flexDirection: "column",
               alignItems: "center",
             }}
           >
+
+            <View>
+<Text>Hello !</Text>
+<Text></Text>
+            </View>
             <Pressable
               style={{
                 flexDirection: "row",
@@ -158,12 +479,10 @@ const HomeScreen = () => {
                 size={22}
                 color="black"
               />
-              <TextInput placeholder="Search Amazon.in" />
+              <TextInput placeholder="Search Students" />
             </Pressable>
-
-            <Feather name="mic" size={24} color="black" />
-          </View>
-
+          </View> */}
+          {/* 
           <Pressable
             onPress={() => setModalVisible(!modalVisible)}
             style={{
@@ -174,9 +493,9 @@ const HomeScreen = () => {
               backgroundColor: "#AFEEEE",
             }}
           >
-            <Ionicons name="location-outline" size={24} color="black" />
-
-            <Pressable>
+           <Text>Hello!</Text>
+           <Text>User</Text> */}
+          {/* <Pressable>
             {selectedAddress ? (
                 <Text>
                   Deliver to {selectedAddress?.name} - {selectedAddress?.street}
@@ -186,12 +505,12 @@ const HomeScreen = () => {
                     Add a Address
                 </Text>
               )}
-            </Pressable>
+            </Pressable> */}
 
-            <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
-          </Pressable>
+          {/* <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
+          </Pressable> */}
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {/* <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {list.map((item, index) => (
               <Pressable
               key={index}
@@ -218,11 +537,17 @@ const HomeScreen = () => {
                 </Text>
               </Pressable>
             ))}
-          </ScrollView>
-{/* 
+          </ScrollView> */}
+
+          {/* <ScrollView>
+
+<SliderBox images={images} circleloop dotColor={'#13274F'} inactivedotColor={'#90A4ae'} ImageComponentStyle={{width:'100%'}} />
+
+          </ScrollView> */}
+          {/* 
           ComponentStyle={{ width: "100%" }}
           /> */}
-  {/*   DISABLING "TREANDING DEALS OF T   HE WEEK " */}
+          {/*   DISABLING "TREANDING DEALS OF T   HE WEEK " */}
           {/* <Text style={{ padding: 10, fontSize: 18, fontWeight: "bold" }}>
             Trending Deals of the week
           </Text>
@@ -269,7 +594,7 @@ const HomeScreen = () => {
               // onChangeValue={onChange}
               zIndex={3000}
               zIndexInverse={1000}
-              />
+            />
           </View>
 
           <View
@@ -317,7 +642,7 @@ const HomeScreen = () => {
             {/* already added addresses */}
             {addresses?.map((item, index) => (
               <Pressable
-              onPress={() => setSelectedAdress(item)}
+                onPress={() => setSelectedAdress(item)}
                 style={{
                   width: 140,
                   height: 140,
@@ -329,7 +654,7 @@ const HomeScreen = () => {
                   gap: 3,
                   marginRight: 15,
                   marginTop: 10,
-                  backgroundColor:selectedAddress === item ? "#FBCEB1" : "white"
+                  backgroundColor: selectedAddress === item ? "#FBCEB1" : "white"
                 }}
               >
                 <View
@@ -428,4 +753,21 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  shadowProp: {
+    shadowColor: '#580ff5',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    margin: '2%', 
+    borderRadius: 10,
+  },
+  CardProp: {
+    shadowColor: '#580ff5',
+    shadowOffset: {width: -2, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    margin: '2%', 
+    borderRadius: 10,
+  },
+});

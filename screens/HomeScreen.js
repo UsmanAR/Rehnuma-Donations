@@ -272,6 +272,15 @@ students.length>0 &&(
               .map((item, index) => (
                 <ProductItem item={item} key={index} />
               ))} */}
+
+
+              {students.length >0 &&(
+               students
+               ?.filter((item) => item.field === 'Engineering')
+               .map((item, index) => (
+                 <Card data={item} key={index} />
+               ))
+              )}
                 {/* <Card />
                 <Card />
                 <Card />
@@ -299,6 +308,14 @@ students.length>0 &&(
               .map((item, index) => (
                 <ProductItem item={item} key={index} />
               ))} */}
+
+{students.length >0 &&(
+               students
+               ?.filter((item) => item.field === 'Engineering')
+               .map((item, index) => (
+                 <Card data={item} key={index} />
+               ))
+              )}
                 {/* <Card />
                 <Card />
                 <Card />

@@ -18,6 +18,7 @@ import ConfirmationScreen from "../screens/ConfirmationScreen";
 import OrderScreen from "../screens/OrderScreen";
 
 import StudentInfoScreen from "../screens/StudentInfoScreen";
+import Fullpage from "../screens/Fullpage";
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -82,6 +83,7 @@ const StackNavigator = () => {
           component={LoginScreen}
           options={{ headerShown: false }}
         />
+        
         <Stack.Screen
           name="Register"
           component={RegisterScreen}
@@ -92,6 +94,10 @@ const StackNavigator = () => {
           component={BottomTabs}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+        name="Full"
+        component={Fullpage}
+        options={{ headerShown: false }} />
         <Stack.Screen
           name="Info"
           component={StudentInfoScreen}

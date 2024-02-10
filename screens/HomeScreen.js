@@ -69,7 +69,6 @@ const HomeScreen = () => {
     img, img, img, img, img, img, img, img, img
   ];
 
-
   const [students, setStudents] = useState([]);
   const navigation = useNavigation();
   const [open, setOpen] = useState(false);
@@ -200,7 +199,9 @@ const HomeScreen = () => {
           <ScrollView>
             <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
               <Text style={{fontSize:18,fontWeight:700,color:'balck'}}>Donations</Text>
-            <Pressable style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+            <Pressable
+            onPress={()=>{if(students.length>0){navigation.navigate("Full",{item:students,sorted:false,field:''})}}}
+             style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
               <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
               <MaterialIcons name="arrow-right" size={30} color="black" />
             </Pressable>
@@ -256,7 +257,9 @@ students.length>0 &&(
           <ScrollView>
             <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
               <Text style={{fontSize:18,fontWeight:700,color:'balck'}}>Engineers</Text>
-            <Pressable style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+            <Pressable
+            onPress={()=>{if(students.length>0){navigation.navigate("Full",{item:students, sorted:true,field:'Engineering'})}}}
+             style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
               <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
               <MaterialIcons name="arrow-right" size={30} color="black" />
             </Pressable>
@@ -292,7 +295,9 @@ students.length>0 &&(
           <ScrollView>
             <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
               <Text style={{fontSize:18,fontWeight:700,color:'balck'}}>Doctors</Text>
-            <Pressable style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+            <Pressable
+            onPress={()=>{if(students.length>0){navigation.navigate("Full",{item:students, sorted:true,field:'Doctor'})}}}
+            style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
               <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
               <MaterialIcons name="arrow-right" size={30} color="black" />
             </Pressable>

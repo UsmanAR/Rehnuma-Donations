@@ -7,6 +7,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useState,useEffect } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -48,7 +49,7 @@ const LoginScreen = () => {
         navigation.replace("Main");
       })
       .catch((error) => {
-        Alert.alert("Login Error", "Invalid Email");
+       Alert.alert("Login Error", "Invalid Email");
         console.log(error);
       });
   };

@@ -19,6 +19,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const jwt = require("jsonwebtoken");
+
+
 app.listen(port, () => {
   console.log("Server is running on port 8000");
 });
@@ -31,6 +33,15 @@ mongoose.connect("mongodb://localhost:27017/Rehnuma", {
     console.log("error connecting to Mongodb", err)
 
 })
+
+//Function to generate secret key for JWT token
+const generateSecretKey = () => {
+  const secretKey = crypto.randomBytes(32).toString("hex");
+
+  return secretKey;
+};
+
+const secretKey = generateSecretKey();
 
 
 const sendVerificationEmail = async (email, verificationToken) => {
@@ -124,13 +135,7 @@ app.get("/verify/:token", async (req, res) => {
   }
 });
 
-const generateSecretKey = () => {
-  const secretKey = crypto.randomBytes(32).toString("hex");
 
-  return secretKey;
-};
-
-const secretKey = generateSecretKey();
 
 //endpoint to login the user!
 app.post("/login", async (req, res) => {
@@ -210,9 +215,9 @@ app.post("/donations", async (req, res) => {
       decodedId= Id.userId
 
     const user = await User.findById(decodedId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
+    // if (!user) {
+    //   return res.status(404).json({ message: "User not found" });
+    // }
 
     //create an array of product objects from the cart Items
 

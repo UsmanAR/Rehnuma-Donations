@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, Pressable, TextInput, } from 'react-native'
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useState, useEffect, useCallback, useContext, useLayoutEffect } from "react";
 
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -18,8 +18,47 @@ import Loader from '../Components/Loader';
 
 const HomeScreen = () => {
 
-
+  const navigation = useNavigation();
   
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "",
+      headerStyle: {
+        backgroundColor: "#00CED1",
+      },
+      headerLeft: () => (
+        // <Image
+        //   style={{ width: 120, height: 90,resizeMode:'contain'}}
+        //   source={RehnumaLogo}
+        // />
+<>
+        <Text style={{fontWeight:"bold",color:'#FFF7F1',fontSize:22,marginHorizontal:6}}>
+          Rehnuma
+        </Text>
+        <Text style={{fontWeight:"bold",color:'#FFF7F1',fontSize:12,marginHorizontal:6,fontStyle:'italic'}}>
+         Let's Help Needy
+        </Text>
+        </>
+      ),
+      headerRight: () => (
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 6,
+            marginRight: 12,
+          }}
+        >
+          {/* <Icons name='Ionnotification' color='black' />
+        <Icons name='antsearch' color='black' /> */}
+          {/* <Ionicons name="notifications-outline" size={24} color="black" />
+
+        <AntDesign name="search1" size={24} color="black" /> */}
+        </View>
+      ),
+    })
+
+  }, [navigation])
 
   const list = [
     {
@@ -50,7 +89,7 @@ const HomeScreen = () => {
 // ];
 
   const [students, setStudents] = useState([]);
-  const navigation = useNavigation();
+
   const [modalVisible, setModalVisible] = useState(false);
   const [query, setQuery] = useState('')
   const [loader, setLoader] = useState(true)

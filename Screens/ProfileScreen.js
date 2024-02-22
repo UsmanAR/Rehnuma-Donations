@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loader from '../Components/Loader';
 import img from '../assets/image.jpg'
 import ProgressBar from 'react-native-progress/Bar'
+import RehnumaLogo from '../assets/RehnumaLogo.png'
 
 
 
@@ -24,12 +25,18 @@ const ProfileScreen = () => {
         backgroundColor: "#00CED1",
       },
       headerLeft: () => (
-        <Image
-          style={{ width: 140, height: 120, resizeMode: "contain" }}
-          source={{
-            uri: "https://assets.stickpng.com/thumbs/580b57fcd9996e24bc43c518.png",
-          }}
-        />
+        // <Image
+        //   style={{ width: 120, height: 90,resizeMode:'contain'}}
+        //   source={RehnumaLogo}
+        // />
+<>
+        <Text style={{fontWeight:"bold",color:'#FFF7F1',fontSize:22,marginHorizontal:6}}>
+          Rehnuma
+        </Text>
+        <Text style={{fontWeight:"bold",color:'#FFF7F1',fontSize:12,marginHorizontal:6,fontStyle:'italic'}}>
+         Let's Help Needy
+        </Text>
+        </>
       ),
       headerRight: () => (
         <View
@@ -126,29 +133,7 @@ const ProfileScreen = () => {
     <ScrollView style={{ padding: 10, flex: 1, backgroundColor: "white" }}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Welcome {user?.name}</Text>
 
-      <View  style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 10,
-          marginTop: 12,
-        }}>
-           <Pressable  style={{
-            padding: 10,
-            backgroundColor: "#E0E0E0",
-            borderRadius: 25,
-            flex: 1,
-          }}>
-        <Text  style={{ textAlign: "center" }}>Your Orders</Text> 
-      </Pressable>
-      <Pressable  style={{
-            padding: 10,
-            backgroundColor: "#E0E0E0",
-            borderRadius: 25,
-            flex: 1,
-          }}>
-        <Text style={{ textAlign: "center" }}>Your Account</Text> 
-      </Pressable>
-</View>
+    
 
 <View  style={{
           flexDirection: "row",
@@ -162,7 +147,7 @@ const ProfileScreen = () => {
             borderRadius: 25,
             flex: 1,
           }}>
-        <Text  style={{ textAlign: "center" }}>Buy Again</Text> 
+        <Text  style={{ textAlign: "center" }}>See Analytics</Text> 
       </Pressable>
       <Pressable  style={{
             padding: 10,

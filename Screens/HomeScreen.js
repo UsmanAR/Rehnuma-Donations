@@ -21,10 +21,13 @@ const HomeScreen = () => {
   const navigation = useNavigation();
   
   useLayoutEffect(() => {
+
+console.log("it is working")
+
     navigation.setOptions({
       headerTitle: "",
       headerStyle: {
-        backgroundColor: "#00CED1",
+        backgroundColor: "#580ff5",
       },
       headerLeft: () => (
         // <Image
@@ -127,8 +130,7 @@ const HomeScreen = () => {
     <>
       <SafeAreaView style={{
         flex: 1,
-        backgroundColor: "white",
-        paddingTop: 50
+        backgroundColor: "white"
       }}>
       {
         loader?<Loader />: <ScrollView>

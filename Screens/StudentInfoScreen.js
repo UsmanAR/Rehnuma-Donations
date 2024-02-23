@@ -143,13 +143,14 @@ const StudentInfoScreen = () => {
         donationItem:data.donationItem,
       };
 
-      console.log(orderData)
+    //   console.log(orderData)
      
       const response = await axios.post( "http://192.168.193.200:8000/donations", orderData
       );
       if (response.status === 200) {
-        console.log('hello')
-        navigation.navigate("Main");
+        setModalVisible(!modalVisible)
+        navigation.navigate("DonationDone");
+        // console.log('hello')
         console.log("order created successfully", response.data);
       } else {
         console.log("error creating order", response.data);

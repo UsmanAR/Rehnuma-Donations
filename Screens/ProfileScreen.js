@@ -8,6 +8,7 @@ import Loader from '../Components/Loader';
 import img from '../assets/image.jpg'
 import ProgressBar from 'react-native-progress/Bar'
 import RehnumaLogo from '../assets/RehnumaLogo.png'
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 
@@ -125,7 +126,7 @@ const ProfileScreen = () => {
     };
 
     fetchDonation();
-  }, []);
+  }, [user]);
 
 
 
@@ -160,7 +161,19 @@ const ProfileScreen = () => {
         style={{ textAlign: "center" }}>Logout</Text> 
       </Pressable>      
 </View>
+
+          <View  style={{ flex: 1, flexDirection: "row", justifyContent: "space-between", alignItems: 'center' }} >
+            <Text style={{fontSize:18,fontWeight:700,color:'black'}}>Your Donations</Text>
+          <Pressable
+          //  onPress={()=>{if(students.length>0){navigation.navigate("Full",{item:students,sorted:false,field:''})}}}
+           style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
+            <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
+            <MaterialIcons name="arrow-right" size={30} color="black" />
+          </Pressable>
+
+          </View>
 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+  
         {loading ?<Loader />: donations.length > 0 ? (
           donations.map((donation,index) => (
          

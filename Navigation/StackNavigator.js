@@ -15,6 +15,7 @@ import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons';
 import StudentInfoScreen from '../Screens/StudentInfoScreen';
 import Fullpage from '../Screens/Fullpage';
 import SearchResult from '../Screens/SearchResult';
+import DonationDoneScreen from '../Screens/DonationDoneScreen';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -29,7 +30,7 @@ const StackNavigator = () => {
           options={{
             tabBarLabel: "Home",
             tabBarLabelStyle: { color: "#008E97" },
-            headerShown: false,
+           
             tabBarIcon: ({ focused }) =>
               focused ? (
                 <Entypo name="home" size={24} color='#008E97'/>
@@ -102,6 +103,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name="SearchResult"
           component={SearchResult}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DonationDone"
+          component={DonationDoneScreen}
           options={{ headerShown: false }}
         />
 

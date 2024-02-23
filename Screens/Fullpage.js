@@ -17,7 +17,7 @@ const Fullpage = () => {
 }}>
 
 <ScrollView style={{ flex: 1, flexDirection: 'column', paddingVertical: 30 }}>
-<Text style={{ fontSize: 19, fontWeight: 700, color: 'black ', textAlign: 'center', marginVertical: 5 }}>{ field?` ${field} Students Details`:`Students Details`}</Text>
+<Text style={{ fontSize: 19, fontWeight: 700, color: '#000 ', textAlign: 'center', marginVertical: 5 }}>{ field?` ${field} Students Details`:`Students Details`}</Text>
 
 
 <View style={{ display: 'flex', flexDirection: 'row', flexWrap: "wrap", justifyContent: 'space-around', marginTop: 30 }}>

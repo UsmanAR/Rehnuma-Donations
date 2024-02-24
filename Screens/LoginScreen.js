@@ -139,7 +139,7 @@ const LoginScreen = () => {
           justifyContent: "space-between",
         }}>
           <Text>Keep me logged in</Text>
-          <Text style={{ color: '#580ff5', fontWeight: "500" }}>
+          <Text style={{ color: '#1aca78', fontWeight: "500" }}>
             Forgot Password
           </Text>
         </View>
@@ -148,7 +148,7 @@ const LoginScreen = () => {
           <Pressable   onPress={handleLogin}
           style={{
             width: 200,
-            backgroundColor:'#580ff5',
+            backgroundColor:'#1aca78',
             borderRadius: 6,
             marginLeft: "auto",
             marginRight: "auto",
@@ -171,7 +171,7 @@ const LoginScreen = () => {
           style={{ marginTop: 15 }}
         >
           <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-            Don't have an account? <Text  style={{ color: '#580ff5', fontWeight: "500" }}>Sign Up</Text> 
+            Don't have an account? <Text  style={{ color: '#1aca78', fontWeight: "500" }}>Sign Up</Text> 
           </Text>
         </Pressable>
       

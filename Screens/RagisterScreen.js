@@ -172,7 +172,7 @@ const RagisterScreen = () => {
         >
           <Text>Keep me logged in</Text>
 
-          <Text style={{ color: '#580ff5', fontWeight: "500" }}>
+          <Text style={{ color: '#1aca78', fontWeight: "500" }}>
             Forgot Password
           </Text>
         </View>
@@ -181,7 +181,7 @@ const RagisterScreen = () => {
           onPress={handleRagister}
           style={{
             width: 200,
-            backgroundColor:'#580ff5',
+            backgroundColor:'#1aca78',
             borderRadius: 6,
             marginLeft: "auto",
             marginRight: "auto",
@@ -205,7 +205,7 @@ const RagisterScreen = () => {
           style={{ marginTop: 15 }}
         >
           <Text style={{ textAlign: "center", color: "gray", fontSize: 16 }}>
-            Already have an account? <Text  style={{ color: '#580ff5', fontWeight: "500" }}>Sign In</Text> 
+            Already have an account? <Text  style={{ color: '#1aca78', fontWeight: "500" }}>Sign In</Text> 
           </Text>
         </Pressable>
         

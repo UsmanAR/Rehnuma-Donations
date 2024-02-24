@@ -1,5 +1,5 @@
-import { ScrollView, StyleSheet, Text, View,Dimensions, TextInput, Pressable, Image,ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { ScrollView, StyleSheet, Text, View, Dimensions, TextInput, Pressable, Image, ActivityIndicator } from 'react-native'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
@@ -11,12 +11,12 @@ import Loader from '../Components/Loader';
 
 const height = Dimensions.get('window').height
 
-const NotFound = () =>(
-  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingVertical: 30,marginVertical:10, borderTopWidth:1,height:height*0.8 }}>
-      
-  <Text>
-  Not Found
-  </Text>
+const NotFound = () => (
+  <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',  height: height * 0.8 }}>
+
+    <Text>
+      Not Found
+    </Text>
   </View>
 )
 
@@ -26,17 +26,17 @@ const SearchResult = () => {
   const route = useRoute();
   const [result, setResult] = useState([])
 
-  const { item,searchinput } = route.params;
+  const { item, searchinput } = route.params;
   const [query, setQuery] = useState(searchinput.toLowerCase())
   const [input, setInput] = useState('')
   const [loader, setLoader] = useState(true)
   // console.log("item",searchinput)
- 
-
-  const filterItem  = (query) =>{
 
 
-    const filteredItems  = item.filter((item) =>{
+  const filterItem = (query) => {
+
+
+    const filteredItems = item.filter((item) => {
       return (
         item.collegeName.toLowerCase() === query ||
         item.address.city.toLowerCase() === query ||
@@ -47,139 +47,146 @@ const SearchResult = () => {
         item.name.firstName.toLowerCase() === query ||
         item.name.lastName.toLowerCase() === query
       );
-    
+
     })
- 
-    setResult(filteredItems )
+
+    setResult(filteredItems)
     setLoader(false)
-   
+
   }
   const handleSearch = () => {
     // Perform search based on the input value
 
-  if (input) {
-    filterItem(input.toLowerCase());
-  }
+    if (input) {
+      filterItem(input.toLowerCase());
+    }
 
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     const fetchData = async () => {
       setLoader(true);
       await filterItem(query); // Assuming filterItem becomes asynchronous
       setLoader(false);
     };
-  
+
     fetchData();
-  },[query])
+  }, [query])
 
-console.log("query", query)
-// console.log("input", input)
-// console.log("result", result)
+  // console.log("query", query)
 
- 
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Search Result",
+      headerStyle: {
+        backgroundColor: "#1aca78",
+
+      },
+      headerTintColor: "#fff",
+
+
+
+    })
+
+  }, [])
 
 
 
 
 
   return (
-   <SafeAreaView style={{
-    flex: 1,
-    backgroundColor: "white",
-}} >
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: "#fff",
+    }} >
 
-{loader?<Loader />:<ScrollView style={{ flex: 1, paddingVertical: 40}}>
+      {loader ? <Loader /> : <ScrollView style={{ flex: 1, paddingVertical: 5 }}>
 
-<Pressable 
-onPress={handleSearch}
-style={{
-  flexDirection: "row",
-  alignItems: "center",
-  marginHorizontal: 7,
-  gap: 10,
-  backgroundColor: "#f0f0f0",
-  marginVertical: 20,
-  marginHorizontal: 15,
-  borderRadius: 3,
-  height: 38,
-  flex: 1,
-  paddingVertical: 5,
-  borderRadius: 15
-
-
-}}>
-  <AntDesign
-     onPress={handleSearch}
-    style={{ paddingLeft: 10 }}
-    name="search1"
-    size={22}
-    color="black"
-  />
-  <TextInput placeholder="Search Students..." style={{ width: "100%" }} onChangeText={(value) =>setInput(value.toLowerCase())}  onSubmitEditing={handleSearch} />
-</Pressable>
-
-<View style={styles.shadowProp}>
+        <Pressable
+          onPress={handleSearch}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginHorizontal: 7,
+            gap: 10,
+            backgroundColor: "#f0f0f0",
+            marginVertical: 20,
+            marginHorizontal: 15,
+            borderRadius: 3,
+            height: 38,
+            flex: 1,
+            paddingVertical: 5,
+            borderRadius: 15
 
 
+          }}>
+          <AntDesign
+            onPress={handleSearch}
+            style={{ paddingLeft: 10 }}
+            name="search1"
+            size={22}
+            color="#000000"
+          />
+          <TextInput placeholder="Search Students..." style={{ width: "100%" }} onChangeText={(value) => setInput(value.toLowerCase())} onSubmitEditing={handleSearch} />
+        </Pressable>
 
- 
-</View>
-
-<Text style={{ fontSize: 19, fontWeight: 700, color: 'black ', textAlign: 'center', marginVertical: 5 }}> Search Result</Text>
-{result.length ===0?<NotFound />:(
-
-<View  style={{ display: 'flex', flexDirection: 'row', flexWrap: "wrap", justifyContent: 'space-around', marginTop: 30 }}>
-
-{
-result.map((item) =>(
-<Pressable
-key={item._id}
-onPress={() => navigation.navigate("Info",{studentData:item})}
-style={[styles.CardProp, { flexDirection: 'column',justifyContent:'center',alignItems:'center', width: 180 ,borderColor:'#c0c0c0',borderWidth:1,paddingBottom:20,marginBottom:30}]}>
-<Image source={{ uri: item?.image }} style={{ width: 150, height: 150, margin: 9, borderRadius: 10 }} />
-<View style={{ marginHorizontal: 18 }}>
-
-  <Text style={{ fontWeight: 700, fontSize: 13 }}>{item.name.firstName} {item.name.lastName}</Text>
-  <Text style={{ fontWeight: 500, fontSize: 11, marginVertical: 5, color: "#C0C0C0" }}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
-  <View style={{ marginVertical: 10 }}>
-
-      <ProgressBar progress={item.donationStatus.amountPending / item.donationStatus.totalAmount}
-          color='#580ff5'
-          width={150}
-          height={10}
-          borderRadius={10}
-
-
-
-      />
-  </View>
-  <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
-
-
-      <View style={{ flexDirection: "row" }}>
-          <Text style={{ color: '#580ff5', fontWeight: 700, marginHorizontal: 5 }}>₹{item.donationStatus.totalAmount - item.donationStatus.amountPending
-          }</Text>
-          <Text style={{ fontWeight: 500, color: "rgba(10,10,10,0.6)" }}>Collected</Text>
-      </View>
-
-
-  </View>
-</View>
-</Pressable>
-))
-}
-
-</View>)
-
-}
+        <View style={styles.shadowProp}>
 
 
 
 
-</ScrollView>}
+        </View>
+        {result.length === 0 ? <NotFound /> : (
 
-   </SafeAreaView>
+          <View style={{ display: 'flex', flexDirection: 'row', flexWrap: "wrap", margin: 'auto' }}>
+
+            {
+              result.map((item) => (
+                <Pressable
+                  key={item._id}
+                  onPress={() => navigation.navigate("Info", { studentData: item })}
+                  style={[styles.CardProp, { flexDirection: 'column', justifyContent: 'center', alignItems: 'center', width: 180, borderColor: '#c0c0c0', borderWidth: 1, paddingBottom: 20, marginBottom: 30 }]}>
+                  <Image source={{ uri: item?.image }} style={{ width: 150, height: 150, margin: 9, borderRadius: 10 }} />
+                  <View style={{ marginHorizontal: 18 }}>
+
+                    <Text style={{ fontWeight: 700, fontSize: 13 }}>{item.name.firstName} {item.name.lastName}</Text>
+                    <Text style={{ fontWeight: 500, fontSize: 11, marginVertical: 5, color: "#C0C0C0" }}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
+                    <View style={{ marginVertical: 10 }}>
+
+                      <ProgressBar progress={item.donationStatus.amountPending / item.donationStatus.totalAmount}
+                        color='#1aca78'
+                        width={150}
+                        height={10}
+                        borderRadius={10}
+                      />
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
+
+
+                      <View style={{ flexDirection: "row" }}>
+                        <Text style={{ color: '#1aca78', fontWeight: 700, marginHorizontal: 5 }}>₹{item.donationStatus.totalAmount - item.donationStatus.amountPending
+                        }</Text>
+                        <Text style={{ fontWeight: 500, color: "rgba(10,10,10,0.6)" }}>Collected</Text>
+                      </View>
+
+
+                    </View>
+                  </View>
+                </Pressable>
+              ))
+            }
+
+          </View>)
+
+        }
+
+
+
+
+      </ScrollView>}
+
+    </SafeAreaView>
   )
 }
 
@@ -187,19 +194,19 @@ export default SearchResult
 
 const styles = StyleSheet.create({
   shadowProp: {
-      shadowColor: '#580ff5',
-      shadowOffset: { width: -2, height: 4 },
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      margin: '2%',
-      borderRadius: 10,
+    shadowColor: '#1aca78',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    margin: '2%',
+    borderRadius: 10,
   },
   CardProp: {
-      shadowColor: '#580ff5',
-      shadowOffset: { width: -2, height: 4 },
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      margin: '2%',
-      borderRadius: 10,
+    shadowColor: '#1aca78',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    margin: '2%',
+    borderRadius: 10,
   },
 });

@@ -21,7 +21,7 @@ const Card = ({data}) => {
                 <View style={{ marginVertical: 10 }}>
 
                     <ProgressBar progress={dontaionProgess}
-                        color='#580ff5'
+                        color='#1aca78'
                         width={200}
                         height={10}
                         borderRadius={10}
@@ -34,7 +34,7 @@ const Card = ({data}) => {
 
 
                     <View style={{ flexDirection: "row" }}>
-                        <Text style={{ color: '#580ff5', fontWeight: 700, marginHorizontal: 5 }}>₹{dontaionDone}</Text>
+                        <Text style={{ color: '#1aca78', fontWeight: 700, marginHorizontal: 5 }}>₹{dontaionDone}</Text>
                         <Text style={{ fontWeight: 500, color: "#C0C0C0" }}>Collected</Text>
                     </View>
               

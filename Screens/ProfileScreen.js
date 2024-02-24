@@ -18,43 +18,17 @@ const ProfileScreen = () => {
   const { userId, setUserId } = useContext(UserType);
 
 
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerTitle: "",
+      headerTitle: "Profile",
       headerStyle: {
-        backgroundColor: "#00CED1",
+        backgroundColor: "#1aca78",
+      
       },
-      headerLeft: () => (
-        // <Image
-        //   style={{ width: 120, height: 90,resizeMode:'contain'}}
-        //   source={RehnumaLogo}
-        // />
-<>
-        <Text style={{fontWeight:"bold",color:'#FFF7F1',fontSize:22,marginHorizontal:6}}>
-          Rehnuma
-        </Text>
-        <Text style={{fontWeight:"bold",color:'#FFF7F1',fontSize:12,marginHorizontal:6,fontStyle:'italic'}}>
-         Let's Help Needy
-        </Text>
-        </>
-      ),
-      headerRight: () => (
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 6,
-            marginRight: 12,
-          }}
-        >
-          {/* <Icons name='Ionnotification' color='black' />
-        <Icons name='antsearch' color='black' /> */}
-          {/* <Ionicons name="notifications-outline" size={24} color="black" />
+      headerTintColor: "#fff",
+     
 
-        <AntDesign name="search1" size={24} color="black" /> */}
-        </View>
-      ),
+
     })
 
   }, [])
@@ -117,7 +91,7 @@ const ProfileScreen = () => {
         const response = await axios.get(`http://192.168.193.200:8000/donations/${userId}`);
          const donation = response.data.donation;
         setDonation(donation)
-        // console.log(donation.donations.name)
+        // console.log(donation[0].donations.image)
 
         setLoading(false);
       } catch (error) {
@@ -167,7 +141,7 @@ const ProfileScreen = () => {
           <Pressable
           //  onPress={()=>{if(students.length>0){navigation.navigate("Full",{item:students,sorted:false,field:''})}}}
            style={{flexDirection:"row",alignItems:"center", marginVertical:20}}>
-            <Text style={{fontSize:16,fontWeight:600,color:'#580ff5'}}>See all</Text>
+            <Text style={{fontSize:16,fontWeight:600,color:'#1aca78'}}>See all</Text>
             <MaterialIcons name="arrow-right" size={30} color="black" />
           </Pressable>
 
@@ -179,9 +153,9 @@ const ProfileScreen = () => {
          
             <Pressable 
             key={index}
-       
+            onPress={() => navigation.navigate("DonatedScreen",{studentData:donation.donations})}
         style={[styles.CardProp, { flexDirection: 'column', width: 250, height: 350 }]}>
-            <Image source={img} style={{ width: 220, height: 150, margin: 18, borderRadius: 10 }} />
+            <Image source={{uri:donation.donations.image}} style={{ width: 220, height: 150, margin: 18, borderRadius: 10 }} />
             <View style={{ marginHorizontal: 18 }}>
 
                 <Text style={{ fontWeight: 700, fontSize: 15 }}>{donation.donations.name.firstName} {donation.donations.name.lastName}</Text>
@@ -193,7 +167,7 @@ const ProfileScreen = () => {
 
 
                     <View style={{ flexDirection: "row" }}>
-                        <Text style={{ color: '#580ff5', fontWeight: 700, marginHorizontal: 5 }}>₹{donation.donations.donatedAmount}</Text>
+                        <Text style={{ color: '#1aca78', fontWeight: 700, marginHorizontal: 5 }}>₹{donation.donations.donatedAmount}</Text>
                         <Text style={{ fontWeight: 500, color: "#C0C0C0" }}>Donated</Text>
                     </View>
               

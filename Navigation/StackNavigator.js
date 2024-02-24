@@ -16,6 +16,7 @@ import StudentInfoScreen from '../Screens/StudentInfoScreen';
 import Fullpage from '../Screens/Fullpage';
 import SearchResult from '../Screens/SearchResult';
 import DonationDoneScreen from '../Screens/DonationDoneScreen';
+import DonatedScreen from '../Screens/DonatedScreen';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -28,14 +29,15 @@ const StackNavigator = () => {
           name="Home"
           component={HomeScreen}
           options={{
+            headerShown:false,
             tabBarLabel: "Home",
             tabBarLabelStyle: { color: "#008E97" },
            
             tabBarIcon: ({ focused }) =>
               focused ? (
-                <Entypo name="home" size={24} color='#008E97'/>
+                <Entypo name="home" size={26} color='#1aca78'/>
               ) : (
-                <AntDesign name="home" size={24} color='black'/>
+                <AntDesign name="home" size={26} color='black'/>
               ),
           }}
         />
@@ -48,9 +50,9 @@ const StackNavigator = () => {
             tabBarLabelStyle: { color: "#008E97" },
             tabBarIcon: ({ focused }) =>
               focused ? (
-                <Ionicons name="person" size={24} color='#008E97'/>
+                <Ionicons name="person" size={26} color='#1aca78'/>
               ) : (
-                <Ionicons name="person-outline" size={24}/>
+                <Ionicons name="person-outline" size={26}/>
               ),
           }}
         />
@@ -68,11 +70,7 @@ const StackNavigator = () => {
         component={LoginScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
-        name='Car'
-        component={CarouselPage}
-        options={{ headerShown: false }}
-      />
+     
 
       <Stack.Screen
         name="Register"
@@ -82,7 +80,7 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Info"
           component={StudentInfoScreen}
-          options={{ headerShown: false }}
+          options={{  }}
         />
         <Stack.Screen
           name="Order"
@@ -98,16 +96,21 @@ const StackNavigator = () => {
         <Stack.Screen
           name="Full"
           component={Fullpage}
-          options={{ headerShown: false }}
+          options={{}}
         />
         <Stack.Screen
           name="SearchResult"
           component={SearchResult}
-          options={{ headerShown: false }}
+          options={{ }}
         />
         <Stack.Screen
           name="DonationDone"
           component={DonationDoneScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="DonatedScreen"
+          component={DonatedScreen}
           options={{ headerShown: false }}
         />
 

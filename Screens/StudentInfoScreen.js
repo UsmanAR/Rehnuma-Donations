@@ -1,5 +1,5 @@
 import { Image, KeyboardAvoidingView, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, BackHandler, Alert } from 'react-native'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import img from '../assets/image.jpg'
 import DetailTable from '../Components/DetailTable'
@@ -180,6 +180,21 @@ const StudentInfoScreen = () => {
 
     }, [modalVisible])
 
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          headerTitle: "Detials",
+          headerStyle: {
+            backgroundColor: "#1aca78",
+          
+          },
+          headerTintColor: "#fff",
+         
+
+    
+        })
+    
+      }, [])
+
     return (
         <>
             <SafeAreaView style={{
@@ -188,7 +203,7 @@ const StudentInfoScreen = () => {
                 paddingVertical: 15
             }}>
                 <ScrollView style={{ flex: 1, flexDirection: "column", gap: 5, paddingVertical: 10, paddingHorizontal: 10 }}>
-                    <Text style={{ fontSize: 19, fontWeight: 700, color: 'black', textAlign: 'center', marginVertical: 5 }}>Details</Text>
+                   
                     <Image source={{ uri: studentData?.image }} style={[styles.ImProp]} />
                     <View style={{ marginHorizontal: 18 }}>
                         <Text style={{ fontWeight: 700, fontSize: 19 }}>{studentData.name.firstName} {studentData.name.lastName}</Text>
@@ -207,7 +222,7 @@ const StudentInfoScreen = () => {
                         <View style={{ marginVertical: 10 }}>
                             <Text style={{ fontWeight: "bold", fontSize: 15, marginVertical: 13 }}>Donation Goal</Text>
                             <ProgressBar progress={dontaionProgess}
-                                color='#580ff5'
+                                color='#1aca78'
                                 width={350}
                                 height={9}
                                 borderRadius={10}
@@ -216,13 +231,13 @@ const StudentInfoScreen = () => {
                         </View>
 
                         <View style={{ flexDirection: "row" }}>
-                            <Text style={{ color: '#580ff5', fontWeight: 700, marginHorizontal: 5 }}>₹{dontaionDone}</Text>
+                            <Text style={{ color: '#1aca78', fontWeight: 700, marginHorizontal: 5 }}>₹{dontaionDone}</Text>
                             <Text style={{ fontWeight: 500, color: "#C0C0C0" }}>Collected</Text>
                         </View>
                         <Pressable
                             onPress={() => { setModalVisible(true) }}
                             style={[styles.shadowProp, {
-                                backgroundColor: "#580ff5",
+                                backgroundColor: "#1aca78",
                                 borderRadius: 10,
                                 padding: 12,
                                 width: '90%',
@@ -304,12 +319,12 @@ const StudentInfoScreen = () => {
                             <Pressable
 
                                 onPress={() => handlePress(500)}
-                                android_ripple={{ color: '#580ff5' }}
+                                android_ripple={{ color: '#1aca78' }}
                                 style={{
                                     width: '90%',
                                     backgroundColor: "white",
                                     borderRadius: 6,
-                                    borderColor: selected === 500 ? '#580ff5' : '#c0c0c0',
+                                    borderColor: selected === 500 ? '#1aca78' : '#c0c0c0',
 
                                     borderWidth: selected === 500 ? 3 : 1,
                                     marginLeft: "auto",
@@ -321,7 +336,7 @@ const StudentInfoScreen = () => {
                                 <Text
                                     style={{
                                         textAlign: "center",
-                                        color: selected === 500 ? '#580ff5' : 'black',
+                                        color: selected === 500 ? '#1aca78' : 'black',
                                         fontSize: 16,
                                         fontWeight: "bold",
                                     }}
@@ -332,12 +347,12 @@ const StudentInfoScreen = () => {
                             <Pressable
                                 //   onPress={handleLogin}
                                 onPress={() => handlePress(200)}
-                                android_ripple={{ color: '#580ff5' }}
+                                android_ripple={{ color: '#1aca78' }}
                                 style={{
                                     width: '90%',
                                     backgroundColor: "white",
                                     borderRadius: 6,
-                                    borderColor: selected === 200 ? '#580ff5' : '#c0c0c0',
+                                    borderColor: selected === 200 ? '#1aca78' : '#c0c0c0',
                                     borderWidth: selected === 200 ? 3 : 1,
                                     marginLeft: "auto",
                                     marginVertical: 10,
@@ -348,7 +363,7 @@ const StudentInfoScreen = () => {
                                 <Text
                                     style={{
                                         textAlign: "center",
-                                        color: selected === 200 ? '#580ff5' : 'black',
+                                        color: selected === 200 ? '#1aca78' : 'black',
                                         fontSize: 16,
                                         fontWeight: "bold",
                                     }}
@@ -359,12 +374,12 @@ const StudentInfoScreen = () => {
                             <Pressable
                                 //   onPress={handleLogin}
                                 onPress={() => handlePress(100)}
-                                android_ripple={{ color: '#580ff5' }}
+                                android_ripple={{ color: '#1aca78' }}
                                 style={{
                                     width: '90%',
                                     backgroundColor: "white",
                                     borderRadius: 6,
-                                    borderColor: selected === 100 ? '#580ff5' : '#c0c0c0',
+                                    borderColor: selected === 100 ? '#1aca78' : '#c0c0c0',
                                     borderWidth: selected === 100 ? 3 : 1,
                                     marginLeft: "auto",
                                     marginVertical: 10,
@@ -375,7 +390,7 @@ const StudentInfoScreen = () => {
                                 <Text
                                     style={{
                                         textAlign: "center",
-                                        color: selected === 100 ? '#580ff5' : 'black',
+                                        color: selected === 100 ? '#1aca78' : 'black',
                                         fontSize: 16,
                                         fontWeight: "bold",
                                     }}
@@ -388,7 +403,7 @@ const StudentInfoScreen = () => {
                             onPress={handlePressDonate}
 
                                 style={[styles.shadowProp, {
-                                    backgroundColor: "#580ff5",
+                                    backgroundColor: "#1aca78",
                                     borderRadius: 10,
                                     padding: 12,
                                     width: '90%',
@@ -421,10 +436,10 @@ const StudentInfoScreen = () => {
 }
 
 export default StudentInfoScreen
-
+//purple theme #580ff5
 const styles = StyleSheet.create({
     shadowProp: {
-        shadowColor: '#580ff5',
+        shadowColor: '#1aca78',
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
@@ -432,7 +447,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     CardProp: {
-        shadowColor: '#580ff5',
+        shadowColor: '#1aca78',
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
@@ -440,7 +455,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     ImProp: {
-        shadowColor: '#580ff5',
+        shadowColor: '#1aca78',
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,

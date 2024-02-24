@@ -52,7 +52,7 @@ const CarouselPage = () => {
     const renderItem = ({ item, index }) => {
         return (
             <View key={index} style={{ width: screenWidth-20}}>
-                <Image source={item.image} style={{ height: 220, width: screenWidth-20 }} />
+                <Image source={item.image} style={{ height: 220, width: screenWidth }} />
             </View>
         )
     }

@@ -1,5 +1,5 @@
 import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ProgressBar from 'react-native-progress/Bar';
 
@@ -10,6 +10,23 @@ const Fullpage = () => {
     const { item,sorted,field } = route.params;
     console.log("item",field)
 
+
+    useLayoutEffect(() => {
+        navigation.setOptions({
+          headerTitle: "Students Detials",
+          headerStyle: {
+            backgroundColor: "#1aca78",
+          
+          },
+          headerTintColor: "#fff",
+         
+
+    
+        })
+    
+      }, [])
+
+
   return (
  <SafeAreaView  style={{
     flex: 1,
@@ -17,7 +34,7 @@ const Fullpage = () => {
 }}>
 
 <ScrollView style={{ flex: 1, flexDirection: 'column', paddingVertical: 30 }}>
-<Text style={{ fontSize: 19, fontWeight: 700, color: '#000 ', textAlign: 'center', marginVertical: 5 }}>{ field?` ${field} Students Details`:`Students Details`}</Text>
+<Text style={{ fontSize: 19, fontWeight: 700, color: 'rgb(0,0,0) ', textAlign: 'center', marginVertical: 5 }}>{ field?` ${field} Students Details`:`Students Details`}</Text>
 
 
 <View style={{ display: 'flex', flexDirection: 'row', flexWrap: "wrap", justifyContent: 'space-around', marginTop: 30 }}>
@@ -38,7 +55,7 @@ const Fullpage = () => {
                               <View style={{ marginVertical: 10 }}>
 
                                   <ProgressBar progress={item.donationStatus.amountPending / item.donationStatus.totalAmount}
-                                      color='#580ff5'
+                                      color='#1aca78'
                                       width={150}
                                       height={10}
                                       borderRadius={10}
@@ -51,7 +68,7 @@ const Fullpage = () => {
 
 
                                   <View style={{ flexDirection: "row" }}>
-                                      <Text style={{ color: '#580ff5', fontWeight: 700, marginHorizontal: 5 }}>₹{item.donationStatus.totalAmount - item.donationStatus.amountPending
+                                      <Text style={{ color: '#1aca78', fontWeight: 700, marginHorizontal: 5 }}>₹{item.donationStatus.totalAmount - item.donationStatus.amountPending
                                       }</Text>
                                       <Text style={{ fontWeight: 500, color: "rgba(10,10,10,0.6)" }}>Collected</Text>
                                   </View>
@@ -77,7 +94,7 @@ const Fullpage = () => {
                               <View style={{ marginVertical: 10 }}>
 
                                   <ProgressBar progress={item.donationStatus.amountPending / item.donationStatus.totalAmount}
-                                      color='#580ff5'
+                                      color='#1aca78'
                                       width={150}
                                       height={10}
                                       borderRadius={10}
@@ -90,7 +107,7 @@ const Fullpage = () => {
 
 
                                   <View style={{ flexDirection: "row" }}>
-                                      <Text style={{ color: '#580ff5', fontWeight: 700, marginHorizontal: 5 }}>₹{item.donationStatus.totalAmount - item.donationStatus.amountPending
+                                      <Text style={{ color: '#1aca78', fontWeight: 700, marginHorizontal: 5 }}>₹{item.donationStatus.totalAmount - item.donationStatus.amountPending
                                       }</Text>
                                       <Text style={{ fontWeight: 500, color: "rgba(10,10,10,0.6)" }}>Collected</Text>
                                   </View>
@@ -114,7 +131,7 @@ export default Fullpage
 
 const styles = StyleSheet.create({
     shadowProp: {
-        shadowColor: '#580ff5',
+        shadowColor: '#1aca78',
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
@@ -122,7 +139,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     CardProp: {
-        shadowColor: '#580ff5',
+        shadowColor: '#1aca78',
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,

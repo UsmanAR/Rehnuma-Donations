@@ -33,7 +33,7 @@ const donate =async () =>{
       };
 
      
-      const response = await axios.post( "http:192.168.193.200:8000/donations", orderData
+      const response = await axios.post( "http:192.168.6.200:8000/donations", orderData
       );
       if (response.status === 200) {
         console.log('hello')

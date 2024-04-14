@@ -56,7 +56,7 @@ const ProfileScreen = () => {
 
       try {
         const response = await axios.get(
-          `http://192.168.193.200:8000/profile/${userId}`
+          `http:192.168.6.200:8000/profile/${userId}`
         );
 
 
@@ -88,7 +88,7 @@ const ProfileScreen = () => {
 
       try {
 
-        const response = await axios.get(`http://192.168.193.200:8000/donations/${userId}`);
+        const response = await axios.get(`http:192.168.6.200:8000/donations/${userId}`);
          const donation = response.data.donation;
         setDonation(donation)
         // console.log(donation[0].donations.image)

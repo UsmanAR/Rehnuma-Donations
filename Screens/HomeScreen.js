@@ -50,7 +50,7 @@ const HomeScreen = () => {
 
       try {
         const response = await axios.get(
-          `http://192.168.193.200:8000/profile/${userId}`
+          `http:192.168.6.200:8000/profile/${userId}`
         );
 
 
@@ -71,7 +71,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http:192.168.193.200:8000/students");
+        const response = await axios.get("http:192.168.6.200:8000/students");
         setStudents(response.data.beneficiaries);
         setLoader(false)
         // console.log(response.data)
@@ -117,6 +117,7 @@ const HomeScreen = () => {
           }}>
             <ScrollView style={{
               paddingVertical: 30,
+          
               backgroundColor: "#1dd881",
             }} >
               <View style={{paddingVertical:20,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
@@ -130,12 +131,16 @@ const HomeScreen = () => {
               <Text style={{ fontWeight: 600, fontSize: 20 }}>Mr. {user?.name}</Text>
               </View>
               </View>
+
+              <Pressable   onPress={() =>  { navigation.navigate("Notification") } }>
+
               <MaterialIcons name='notifications'  style={{fontSize:35,marginRight:20}}/>
+              </Pressable>
             </View>
 
             </ScrollView>
 
-            <ScrollView style={{  flexDirection: "column", gap: 5, paddingHorizontal: 10,backgroundColor:"#fff", borderTopLeftRadius: 20, borderTopRightRadius: 20,top:-20,zIndex:1,}}>
+            <ScrollView style={{  flexDirection: "column", gap: 5, paddingHorizontal: 10,backgroundColor:"#fff", borderTopLeftRadius: 20, borderTopRightRadius: 20,top:-20,zIndex:1,paddingBottom:70}}>
              
               <Pressable
                 onPress={() => { if (students.length > 0) { navigation.navigate("SearchResult", { item: students, searchinput: query }) } }}
@@ -225,7 +230,7 @@ const HomeScreen = () => {
                 </View>
 
               </ScrollView>
-              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1, flexDirection: "row", gap: 5, paddingVertical: 10, }}>
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ flex: 1, flexDirection: "row", gap: 5 }}>
 
 
                 {/* {products

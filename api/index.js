@@ -75,7 +75,6 @@ const sendVerificationEmail = async (email, verificationToken) => {
 // ... existing imports and setup ...
 
 app.post("/register", async (req, res) => {
-  console.log('hii')
   try {
     const { name, email, password } = req.body;
 
@@ -300,3 +299,112 @@ app.get("/students",async (req,res)=>{
     });
   }
 })
+
+// ENDPOINT TO ADD STUDENT
+
+app.post("/addStudent/:userId",async (req,res)=>{
+  try{
+    const {
+      name,
+      mobileNumber,
+      alternateMobileNumber,
+      collegeName,
+      address,
+      field,
+      stream,
+      status,
+      selectionStatus
+    } = req.body
+    const user = req.params.userId;
+    console.log("Params \n" + JSON.stringify(req.params.userId)  + "\nNOw req.body  \n" + JSON.stringify(req.body))
+    // const user = User.findById(userId)
+    // const token = jwt.sign({ userId: user._id }, secretKey);
+    const newStudent = new Beneficiary({
+      user,
+      name,
+      mobileNumber,
+      alternateMobileNumber,
+      collegeName,
+      address,
+      field,
+      status,
+      donationStatus:{
+        "totalAmount":50000,
+        "amountPending":50000,
+        "status":"Pending"
+      },
+      selectionStatus
+    })
+    await newStudent.save();
+    res.status(201).json({
+      message:"New Student Added Successfully"
+    })
+
+  }
+  catch(error){
+    res.status(500).json({
+      message:error.message
+    })
+  }
+})
+
+// ENDPOINT to GET all Notificatiions that are "Under Review"
+
+app.get("/toReview" ,async (req,res)=>{
+        try{
+          const beneficiaries = await Beneficiary.find({
+            selectionStatus:"Under Review"
+          });
+          if(!beneficiaries){
+            res.status(200).json({
+              message:"No beneficiaries to be reviewed"
+            })
+          }
+          else{
+            res.status(200).json({
+              beneficiaries
+            })
+          }
+        }
+        catch(error){
+          res.status(500).json({
+            message:error.message
+          })
+        }
+})
+
+
+// Endpoint to ACCEPT or REJECT Beneficiary Application [ only for Admin  ]
+
+app.post("/toReview/:mobileNumber",async (req,res)=>{
+      try{
+        const adminSelection = req.body;
+        console.log(adminSelection.selection)
+        const mobileNumber = req.params.mobileNumber;
+        const updated = await Beneficiary.findOneAndUpdate({
+          mobileNumber:mobileNumber
+        },{
+          selectionStatus:adminSelection.selection
+        },{
+          new:true
+        })
+        await updated.save();
+        if(!updated){
+          res.status(200).json({
+            message:"Record not found"
+          })
+        }
+        else {
+          res.status(200).json({
+            message:"Status updated successfully"
+          })
+        }
+      }
+      catch(error){
+        res.status(500).json({
+          message:error.message
+        })
+      }
+} )
+
+

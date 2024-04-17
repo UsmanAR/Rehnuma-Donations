@@ -1,7 +1,11 @@
 const mongoose = require("mongoose")
 
 const beneficiarySchema = new  mongoose.Schema({
-    
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        require: true,
+      },
     name:{
         firstName:{
             type:String,
@@ -65,6 +69,12 @@ const beneficiarySchema = new  mongoose.Schema({
     },
     Documents:{
         
+    },
+    selectionStatus:{
+        type:String,
+        enum:['Under Review','Accepted','Rejected'],
+        required:true,
+        default:'Under Review'
     }
 })
 

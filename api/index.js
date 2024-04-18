@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const Razorpay = require("razorpay")
 
 const app = express();
 const port = 8000;
@@ -15,11 +16,18 @@ const Beneficiary = require("./models/beneficiary")
 const User = require("./models/user");
 const Donation = require("./models/donation");
 
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const jwt = require("jsonwebtoken");
 
+// add rehnuma's razorpay details
+const razorpay = new Razorpay({
+  key_id: '',
+  key_secret: ''
+});
 
 app.listen(port, () => {
   console.log("Server is running on port 8000");
@@ -407,4 +415,48 @@ app.post("/toReview/:mobileNumber",async (req,res)=>{
       }
 } )
 
+
+
+// ENDPOINT OF PAYMENT GATEWAY
+
+app.post('/donate', async (req, res) => {
+    try {
+        const order = await razorpay.orders.create({
+            amount: req.body.amount * 100,
+            currency: 'INR', 
+            receipt: 'donation_receipt',
+            payment_capture: 1 
+        });
+ 
+        res.json(order);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Failed to create donation order');
+    }
+});
+
+// endpoint for verifying payment
+
+app.post('/verifyDonation', (req, res) => {
+  const body = req.body;
+  const signature = req.headers['x-razorpay-signature'];
+
+  try {
+      const event = razorpay.webhooks.validate(body, signature);
+
+      switch (event.event) {
+          case 'payment.captured':
+              console.log('Payment captured:', event.payload);
+              break;
+          case 'payment.failed':
+              console.log('Payment failed:', event.payload);
+              break;
+      }
+
+      res.json({ status: 'success' });
+  } catch (error) {
+      console.error('Error:', error);
+      res.status(400).send(' Error');
+  }
+});
 

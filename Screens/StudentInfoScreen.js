@@ -49,7 +49,7 @@ const StudentInfoScreen = () => {
 
             try {
                 const response = await axios.get(
-                    `http:192.168.6.200:8000/profile/${userId}`
+                    `http:192.168.19.200:8000/profile/${userId}`
                 );
 
 
@@ -145,7 +145,7 @@ const StudentInfoScreen = () => {
 
     //   console.log(orderData)
      
-      const response = await axios.post( "http:192.168.6.200:8000/donations", orderData
+      const response = await axios.post( "http:192.168.19.200:8000/donations", orderData
       );
       if (response.status === 200) {
         setModalVisible(!modalVisible)

@@ -25,7 +25,7 @@ const jwt = require("jsonwebtoken");
 
 // add rehnuma's razorpay details
 const razorpay = new Razorpay({
-  key_id: '',
+  key_id: 'abcsdad',
   key_secret: ''
 });
 

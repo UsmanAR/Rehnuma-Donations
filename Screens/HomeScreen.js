@@ -50,7 +50,7 @@ const HomeScreen = () => {
 
       try {
         const response = await axios.get(
-          `http:192.168.6.200:8000/profile/${userId}`
+          `http:192.168.19.200:8000/profile/${userId}`
         );
 
 
@@ -71,7 +71,7 @@ const HomeScreen = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http:192.168.6.200:8000/students");
+        const response = await axios.get("http:192.168.19.200:8000/students");
         setStudents(response.data.beneficiaries);
         setLoader(false)
         // console.log(response.data)

@@ -8,7 +8,7 @@ const DonatedScreen = () => {
 
     const route = useRoute();
     const { studentData } = route.params;
-    console.log(studentData.image)
+    // console.log(studentData.image)
 
     return (
         <SafeAreaView style={{

@@ -1,10 +1,13 @@
 import { Alert, Dimensions, KeyboardAvoidingView, Modal, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useHeaderHeight } from '@react-navigation/elements'
 import { Dropdown } from 'react-native-element-dropdown';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserType } from '../Context/UserContext';
+import axios from 'axios';
 
 const ModalScreen = () => {
 
@@ -28,22 +31,25 @@ const ModalScreen = () => {
  
 
  const [formdata,setFormData] = useState({
-  firstName:'',
-  maddileName:'',
-  lastName:'',
-  image:'',
-  mobileNumber:'',
-  alternateMobileNumber:'',
-  collegeName:'',
-  address:{
-    landmark:'',
-    city:'',
-    state:'',
-    
-  },
-  status:'pending',
-  field:''
-
+  userId: userId,
+  studentInfo: {
+    firstName:'',
+    maddileName:'',
+    lastName:'',
+    image:'',
+    mobileNumber:'',
+    alternateMobileNumber:'',
+    collegeName:'',
+    address:{
+      landmark:'',
+      city:'',
+      state:'',
+      
+    },
+    status:'pending',
+    field:''
+  
+   }
  })
 
  const [firstName, setFirstName] = useState('');
@@ -71,29 +77,35 @@ const ModalScreen = () => {
  useEffect(() => {
   const updateData = async () => {
     await setFormData({
-      firstName:firstName,
-      maddileName:middleName,
-      lastName:lastName,
-      image:'NA',
-      mobileNumber:mobileNumber,
-      alternateMobileNumber:alternateMobileNumber,
-      collegeName:collegeName,
-      address:{
-        landmark:'',
-        city:city,
-        state:state,
-        
-      },
-      field:field,
-      stream:stream,
-      status:'pending',
-    
-     })
+      userId: userId,
+      studentInfo: {
+        firstName:firstName,
+        maddileName:middleName,
+        lastName:lastName,
+        image:'NA',
+        mobileNumber:mobileNumber,
+        alternateMobileNumber:alternateMobileNumber,
+        collegeName:collegeName,
+        address:{
+          landmark:'',
+          city:city,
+          state:state,
+          
+        },
+        field:field,
+        stream:stream,
+        status:'pending',
+      
+       }
+    })
     
   };
 
   updateData();
 }, [firstName,lastName,middleName,mobileNumber,alternateMobileNumber,field,stream,city,state,collegeName]);
+
+
+
 
  const handleFomValidation = async() => {
   // Validate first name
@@ -155,7 +167,7 @@ const ModalScreen = () => {
       },
       {
         text: "OK",
-        onPress: () =>  console.log('Form submitted successfully',formdata)
+        onPress: () =>  handleAddStudent()
       },
 ])
 
@@ -163,6 +175,62 @@ const ModalScreen = () => {
   // If all fields are valid, submit the form
  
 };
+
+
+
+
+
+const { userId, setUserId } = useContext(UserType);
+
+
+
+useEffect(() => {
+  const fetchUser = async () => {
+    const token = await AsyncStorage.getItem("authToken");
+    setUserId(token)
+    // console.log(userId)
+
+
+
+  }
+
+  fetchUser();
+
+}, [userId]);
+
+
+
+
+
+
+const handleAddStudent = async() => {
+  try {
+
+      
+const StudentData = {
+    userId: userId,
+    studentInfo:formdata.studentInfo,
+  };
+
+  console.log(StudentData)
+ 
+  const response = await axios.post( `http:192.168.19.200:8000/addStudent/${userId}`, StudentData
+  );
+  if (response.status === 200) {
+    setModalVisible(!modalVisible)
+    navigation.navigate("DonationDone");
+    // console.log('hello')
+    console.log("order created successfully", response.data);
+  } else {
+    console.log("error creating order", response.data);
+  }
+    
+  } catch (error) {
+    console.log("errror", error);
+  }
+}
+
+
 
  const closeModal = () => {
     setModalVisible(false);

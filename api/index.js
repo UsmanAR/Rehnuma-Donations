@@ -250,6 +250,7 @@ app.post("/donations", async (req, res) => {
 app.get("/profile/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
+    console.log(userId)
     const Id =jwt.decode(userId)
     decodedId= Id.userId
 
@@ -272,7 +273,7 @@ app.get("/donations/:userId",async(req,res) => {
     decodedId= Id.userId
 
     const donation = await Donation.find({user:decodedId}).populate("user");
-    console.log(donation)
+    // console.log(donation)
 
     if(!donation || donation.length === 0){
       return res.status(404).json({message:"No orders found for this user"})
@@ -324,7 +325,7 @@ app.post("/addStudent/:userId",async (req,res)=>{
       selectionStatus
     } = req.body
     const user = req.params.userId;
-    console.log("Params \n" + JSON.stringify(req.params.userId)  + "\nNOw req.body  \n" + JSON.stringify(req.body))
+    console.log("Params \n" + JSON.stringify(req.params.userId)  + "\nNow req.body  \n" + JSON.stringify(req.body))
     // const user = User.findById(userId)
     // const token = jwt.sign({ userId: user._id }, secretKey);
     const newStudent = new Beneficiary({
@@ -360,6 +361,7 @@ app.post("/addStudent/:userId",async (req,res)=>{
 
 app.get("/toReview" ,async (req,res)=>{
         try{
+      
           const beneficiaries = await Beneficiary.find({
             selectionStatus:"Under Review"
           });
@@ -387,7 +389,7 @@ app.get("/toReview" ,async (req,res)=>{
 app.post("/toReview/:mobileNumber",async (req,res)=>{
       try{
         const adminSelection = req.body;
-        console.log(adminSelection.selection)
+        // console.log(adminSelection.selection)
         const mobileNumber = req.params.mobileNumber;
         const updated = await Beneficiary.findOneAndUpdate({
           mobileNumber:mobileNumber

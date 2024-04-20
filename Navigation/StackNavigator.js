@@ -19,6 +19,7 @@ import DonationDoneScreen from '../Screens/DonationDoneScreen';
 import DonatedScreen from '../Screens/DonatedScreen';
 import NotificationScreen from '../Screens/NotificationScreen';
 import ModalScreen from '../Components/ModalScreen'
+import AnalyticsScreen from '../Screens/AnalyticsScreen';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -178,6 +179,11 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
+
+      />
+      <Stack.Screen
+        name="Analytics"
+        component={AnalyticsScreen}
 
       />
         <Stack.Screen  headerShown={false} options={{animationEnabled:true,presentation:'transparentModal', headerShown:false,

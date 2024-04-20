@@ -6,6 +6,7 @@ const beneficiarySchema = new  mongoose.Schema({
         ref: "User",
         require: true,
       },
+   studentInfo:{
     name:{
         firstName:{
             type:String,
@@ -76,6 +77,7 @@ const beneficiarySchema = new  mongoose.Schema({
         required:true,
         default:'Under Review'
     }
+   }
 })
 
 const Beneficiary = mongoose.model("Beneficiary",beneficiarySchema);

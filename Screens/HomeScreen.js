@@ -50,7 +50,7 @@ const HomeScreen = () => {
 
       try {
         const response = await axios.get(
-          `http:192.168.19.200:8000/profile/${userId}`
+          `http:192.168.153.200:8000/profile/${userId}`
         );
 
 
@@ -67,21 +67,27 @@ const HomeScreen = () => {
     fetchUserProfile();
   }, [userId]);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get("http:192.168.153.200:8000/students");
+      setStudents(response.data.beneficiaries.filter((item)=>item.selectionStatus != 'Under Review'));
+      setLoader(false)
+      // console.log(response.data)
+    } catch (error) {
+      setLoader(false)
+      console.log(error)
+    }
+  };
+
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http:192.168.19.200:8000/students");
-        setStudents(response.data.beneficiaries);
-        setLoader(false)
-        // console.log(response.data)
-      } catch (error) {
-        setLoader(false)
-        console.log(error)
-      }
-    };
-
+  
     fetchData();
+    const interval = setInterval(() => {
+      fetchData();
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   // useEffect(() => {
@@ -132,7 +138,7 @@ const HomeScreen = () => {
               </View>
               </View>
 
-              <Pressable   onPress={() =>  { navigation.navigate("Notification") } }>
+              <Pressable   onPress={() =>  { navigation.navigate("Notification", data=students)} }>
 
               <MaterialIcons name='notifications'  style={{fontSize:35,marginRight:20}}/>
               </Pressable>

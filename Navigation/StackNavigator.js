@@ -21,6 +21,11 @@ import NotificationScreen from '../Screens/NotificationScreen';
 import ModalScreen from '../Components/ModalScreen'
 import AnalyticsScreen from '../Screens/AnalyticsScreen';
 
+
+import { MaterialIcons } from "@expo/vector-icons";
+import History from '../Screens/History';
+import HistoryFullScreen from '../Screens/HistoryFullScreen';
+
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -179,11 +184,27 @@ const StackNavigator = () => {
       <Stack.Screen
         name="Notification"
         component={NotificationScreen}
-
+        options={({ navigation }) => ({
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.navigate('Main')}>
+                <MaterialIcons name="arrow-back" size={24}  style={{ marginLeft:5,marginRight:10}} />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen
         name="Analytics"
         component={AnalyticsScreen}
+
+      />
+         <Stack.Screen
+        name="History"
+        component={History}
+
+      />
+         <Stack.Screen
+        name="HistoryFullPage"
+        component={HistoryFullScreen}
 
       />
         <Stack.Screen  headerShown={false} options={{animationEnabled:true,presentation:'transparentModal', headerShown:false,

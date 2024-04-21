@@ -1,5 +1,5 @@
 import { Alert, Dimensions, KeyboardAvoidingView, Modal, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState ,useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -25,214 +25,205 @@ const ModalScreen = () => {
     { label: 'Medical', value: 'Medical' },
     { label: 'Engineering', value: 'Engineering' },
     { label: 'Others', value: 'Others' },
-   
+
   ];
 
- 
-
- const [formdata,setFormData] = useState({
-  userId: userId,
-  studentInfo: {
-    firstName:'',
-    maddileName:'',
-    lastName:'',
-    image:'',
-    mobileNumber:'',
-    alternateMobileNumber:'',
-    collegeName:'',
-    address:{
-      landmark:'',
-      city:'',
-      state:'',
-      
-    },
-    status:'pending',
-    field:''
-  
-   }
- })
-
- const [firstName, setFirstName] = useState('');
- const [lastName, setLastName] = useState('');
- const [middleName, setMiddleName] = useState('');
- const [field, setField] = useState(null); // Updated state for dropdown value
- const [stream, setStream] = useState('');
- const [collegeName, setCollegeName] = useState('');
- const [city, setCity] = useState('');
- const [state, setState] = useState('');
- const [mobileNumber, setMobileNumber] = useState('');
- const [alternateMobileNumber, setAlternateMobileNumber] = useState('');
-
- const [firstNameError, setFirstNameError] = useState('');
- const [lastNameError, setLastNameError] = useState('');
- const [fieldError, setFieldBuddyError] = useState(''); // State for dropdown validation error
- const [streamError, setStreamError] = useState('');
- const [collegeNameError, setCollegeNameError] = useState('');
- const [cityError, setCityError] = useState('');
- const [stateError, setStateError] = useState('');
- const [mobileNumberError, setMobileNumberError] = useState('');
 
 
+  const [formdata, setFormData] = useState({
+    userId: userId,
+    studentInfo: {
+      firstName: '',
+      maddileName: '',
+      lastName: '',
+      image: '',
+      mobileNumber: '',
+      alternateMobileNumber: '',
+      collegeName: '',
+      address: {
+        landmark: '',
+        city: '',
+        state: '',
 
- useEffect(() => {
-  const updateData = async () => {
-    await setFormData({
-      userId: userId,
-      studentInfo: {
-        firstName:firstName,
-        maddileName:middleName,
-        lastName:lastName,
-        image:'NA',
-        mobileNumber:mobileNumber,
-        alternateMobileNumber:alternateMobileNumber,
-        collegeName:collegeName,
-        address:{
-          landmark:'',
-          city:city,
-          state:state,
-          
+      },
+      status: 'pending',
+      field: ''
+
+    }
+  })
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [middleName, setMiddleName] = useState('');
+  const [field, setField] = useState(null); // Updated state for dropdown value
+  const [stream, setStream] = useState('');
+  const [collegeName, setCollegeName] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [mobileNumber, setMobileNumber] = useState('');
+  const [alternateMobileNumber, setAlternateMobileNumber] = useState('');
+
+  const [firstNameError, setFirstNameError] = useState('');
+  const [lastNameError, setLastNameError] = useState('');
+  const [fieldError, setFieldBuddyError] = useState(''); // State for dropdown validation error
+  const [streamError, setStreamError] = useState('');
+  const [collegeNameError, setCollegeNameError] = useState('');
+  const [cityError, setCityError] = useState('');
+  const [stateError, setStateError] = useState('');
+  const [mobileNumberError, setMobileNumberError] = useState('');
+
+
+
+  useEffect(() => {
+    const updateData = async () => {
+      await setFormData({
+        userId: userId,
+        name: {
+          firstName: firstName,
+          maddileName: middleName,
+          lastName: lastName
         },
-        field:field,
-        stream:stream,
-        status:'pending',
-      
-       }
-    })
-    
-  };
+        image: 'NA',
+        mobileNumber: mobileNumber,
+        alternateMobileNumber: alternateMobileNumber,
+        collegeName: collegeName,
+        field: field,
+        branch: stream,
+        address: {
+          landmark: '',
+          city: city,
+          state: state,
 
-  updateData();
-}, [firstName,lastName,middleName,mobileNumber,alternateMobileNumber,field,stream,city,state,collegeName]);
-
-
-
-
- const handleFomValidation = async() => {
-  // Validate first name
-  if (!firstName) {
-    setFirstNameError('First name is required');
-    return;
-  }
-  setFirstNameError('');
-
-  if (!lastName) {
-    setLastNameError('Last name is required');
-    return;
-  }
-  setLastNameError('');
-
-  if (!field) {
-    setFieldBuddyError('Field buddy is required'); // Validate dropdown selection
-    return;
-  }
-  setFieldBuddyError('');
-
-  if (!stream) {
-    setStreamError('Stream is required');
-    return;
-  }
-  setStreamError('');
-
-  if (!collegeName) {
-    setCollegeNameError('College name is required');
-    return;
-  }
-  setCollegeNameError('');
-
-  if (!city) {
-    setCityError('City is required');
-    return;
-  }
-  setCityError('');
-
-  if (!state) {
-    setStateError('State is required');
-    return;
-  }
-  setStateError('');
-
-  if (!mobileNumber) {
-    setMobileNumberError('Mobile number is required');
-    return;
-  }
-  setMobileNumberError('');
+        },
 
 
-  
+      })
 
- await Alert.alert("Submit Form","Are You Really Want to Submit This Form",[
-    {
+    };
+
+    updateData();
+  }, [firstName, lastName, middleName, mobileNumber, alternateMobileNumber, field, stream, city, state, collegeName]);
+
+
+
+
+  const handleFomValidation = async () => {
+    // Validate first name
+    if (!firstName) {
+      setFirstNameError('First name is required');
+      return;
+    }
+    setFirstNameError('');
+
+    if (!lastName) {
+      setLastNameError('Last name is required');
+      return;
+    }
+    setLastNameError('');
+
+    if (!field) {
+      setFieldBuddyError('Field buddy is required'); // Validate dropdown selection
+      return;
+    }
+    setFieldBuddyError('');
+
+    if (!stream) {
+      setStreamError('Stream is required');
+      return;
+    }
+    setStreamError('');
+
+    if (!collegeName) {
+      setCollegeNameError('College name is required');
+      return;
+    }
+    setCollegeNameError('');
+
+    if (!city) {
+      setCityError('City is required');
+      return;
+    }
+    setCityError('');
+
+    if (!state) {
+      setStateError('State is required');
+      return;
+    }
+    setStateError('');
+
+    if (!mobileNumber) {
+      setMobileNumberError('Mobile number is required');
+      return;
+    }
+    setMobileNumberError('');
+
+
+
+
+    await Alert.alert("Submit Form", "Are You Really Want to Submit This Form", [
+      {
         text: "Cancel",
         onPress: () => console.log("Cancel is pressed"),
       },
       {
         text: "OK",
-        onPress: () =>  handleAddStudent()
+        onPress: () => handleAddStudent()
       },
-])
+    ])
 
 
-  // If all fields are valid, submit the form
- 
-};
+    // If all fields are valid, submit the form
 
-
-
-
-
-const { userId, setUserId } = useContext(UserType);
-
-
-
-useEffect(() => {
-  const fetchUser = async () => {
-    const token = await AsyncStorage.getItem("authToken");
-    setUserId(token)
-    // console.log(userId)
-
-
-
-  }
-
-  fetchUser();
-
-}, [userId]);
-
-
-
-
-
-
-const handleAddStudent = async() => {
-  try {
-
-      
-const StudentData = {
-    userId: userId,
-    studentInfo:formdata.studentInfo,
   };
 
-  console.log(StudentData)
- 
-  const response = await axios.post( `http:192.168.19.200:8000/addStudent/${userId}`, StudentData
-  );
-  if (response.status === 200) {
-    setModalVisible(!modalVisible)
-    navigation.navigate("DonationDone");
-    // console.log('hello')
-    console.log("order created successfully", response.data);
-  } else {
-    console.log("error creating order", response.data);
+
+
+
+
+  const { userId, setUserId } = useContext(UserType);
+
+
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = await AsyncStorage.getItem("authToken");
+      setUserId(token)
+      // console.log(userId)
+
+
+
+    }
+
+    fetchUser();
+
+  }, [userId]);
+
+
+
+
+
+
+  const handleAddStudent = async () => {
+    try {
+      const response = await axios.post(`http:192.168.153.200:8000/addStudent/${userId}`, formdata
+      );
+      if (response.status === 200) {
+        setModalVisible(!isModalVisible)
+        navigation.navigate("DonationDone");
+        // console.log('hello')
+        console.log("order created successfully", response.data);
+      } else {
+        console.log("error creating order", response.data);
+      }
+
+    } catch (error) {
+      console.log("errror", error);
+    }
   }
-    
-  } catch (error) {
-    console.log("errror", error);
-  }
-}
 
 
 
- const closeModal = () => {
+  const closeModal = () => {
     setModalVisible(false);
     navigation.navigate('Main')
   };
@@ -268,121 +259,121 @@ const StudentData = {
 
         <View style={{ gap: 10 }}>
           <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'column', }} >
-            
+
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Student First Name: </Text>
 
             <TextInput
-             value={firstName}
+              value={firstName}
               onChangeText={text => setFirstName(text)}
-              placeholder='Enter Student First Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
-               {firstNameError ? <Text style={{ color: 'red' }}>{firstNameError}</Text> : null}
+              placeholder='Enter Student First Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
+            {firstNameError ? <Text style={{ color: 'red' }}>{firstNameError}</Text> : null}
           </View>
           <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'column', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Student Last Name: </Text>
             <TextInput
-             value={lastName}
-             onChangeText={text => setLastName(text)}
-             placeholder='Enter Student Last Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
-              {lastNameError ? <Text style={{ color: 'red' }}>{lastNameError}</Text> : null}
+              value={lastName}
+              onChangeText={text => setLastName(text)}
+              placeholder='Enter Student Last Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
+            {lastNameError ? <Text style={{ color: 'red' }}>{lastNameError}</Text> : null}
           </View>
           <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'column', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Student Middle Name: </Text>
             <TextInput
-             value={middleName}
-             onChangeText={text => setMiddleName(text)}
-             placeholder='Enter Student Last Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
-             
+              value={middleName}
+              onChangeText={text => setMiddleName(text)}
+              placeholder='Enter Student Last Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
+
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,marginVertical:10,  flexDirection: 'coumn', }} >
-         
-          <Dropdown
-          style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={data}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? 'Select Field' : '...'}
-          searchPlaceholder="Search..."
-          value={field}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setField(item.value);
-            setIsFocus(false);
-          }}
-          renderLeftIcon={() => (
-            <AntDesign
-              style={styles.icon}
-              color={isFocus ? 'blue' : 'black'}
-              name="Safety"
-              size={20}
+          <View style={{ justifyContent: 'center', width: width * .95, marginVertical: 10, flexDirection: 'coumn', }} >
+
+            <Dropdown
+              style={[styles.dropdown, isFocus && { borderColor: 'blue' }]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={data}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              placeholder={!isFocus ? 'Select Field' : '...'}
+              searchPlaceholder="Search..."
+              value={field}
+              onFocus={() => setIsFocus(true)}
+              onBlur={() => setIsFocus(false)}
+              onChange={item => {
+                setField(item.value);
+                setIsFocus(false);
+              }}
+              renderLeftIcon={() => (
+                <AntDesign
+                  style={styles.icon}
+                  color={isFocus ? 'blue' : 'black'}
+                  name="Safety"
+                  size={20}
+                />
+              )}
             />
-          )}
-        />
             {fieldError ? <Text style={{ color: 'red' }}>{fieldError}</Text> : null}
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,  flexDirection: 'coumn', }} >
+          <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'coumn', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Stream </Text>
-            <TextInput 
-             value={stream}
-             onChangeText={text => setStream(text)}
-            placeholder='Enter Student Stream' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
+            <TextInput
+              value={stream}
+              onChangeText={text => setStream(text)}
+              placeholder='Enter Student Stream' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
             {streamError ? <Text style={{ color: 'red' }}>{streamError}</Text> : null}
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,  flexDirection: 'coumn', }} >
+          <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'coumn', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>College Name </Text>
             <TextInput
-            value={collegeName}
-            onChangeText={text => setCollegeName(text)}
-            placeholder='Enter College Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
+              value={collegeName}
+              onChangeText={text => setCollegeName(text)}
+              placeholder='Enter College Name' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
             {collegeNameError ? <Text style={{ color: 'red' }}>{collegeNameError}</Text> : null}
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,  flexDirection: 'coumn', }} >
+          <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'coumn', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>City </Text>
             <TextInput
-             value={city}
-             onChangeText={text => setCity(text)}
-            placeholder='Enter Student City' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
+              value={city}
+              onChangeText={text => setCity(text)}
+              placeholder='Enter Student City' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
             {cityError ? <Text style={{ color: 'red' }}>{cityError}</Text> : null}
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,  flexDirection: 'coumn', }} >
+          <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'coumn', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>State </Text>
-            <TextInput 
-             value={state}
-             onChangeText={text => setState(text)}
-            placeholder='Enter Student State' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
+            <TextInput
+              value={state}
+              onChangeText={text => setState(text)}
+              placeholder='Enter Student State' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
             {stateError ? <Text style={{ color: 'red' }}>{stateError}</Text> : null}
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,  flexDirection: 'coumn', }} >
+          <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'coumn', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Mobile Number </Text>
-            <TextInput 
-             value={mobileNumber}
-             onChangeText={text => setMobileNumber(text)}
-            placeholder='Enter Student Mobile Number' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }} />
-             {mobileNumberError ? <Text style={{ color: 'red' }}>{mobileNumberError}</Text> : null}
+            <TextInput
+              value={mobileNumber}
+              onChangeText={text => setMobileNumber(text)}
+              placeholder='Enter Student Mobile Number' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
+            {mobileNumberError ? <Text style={{ color: 'red' }}>{mobileNumberError}</Text> : null}
           </View>
-          <View style={{ justifyContent: 'center', width: width * .95,  flexDirection: 'coumn', }} >
+          <View style={{ justifyContent: 'center', width: width * .95, flexDirection: 'coumn', }} >
             <Text style={{ fontWeight: 'bold', fontSize: 14 }}>Alternate Mobile Number </Text>
             <TextInput
-             value={alternateMobileNumber}
-             onChangeText={text => setAlternateMobileNumber(text)}
-            placeholder='Enter Student Alternate Mobile Number' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8,marginTop:4 }}/>
+              value={alternateMobileNumber}
+              onChangeText={text => setAlternateMobileNumber(text)}
+              placeholder='Enter Student Alternate Mobile Number' style={{ flex: 1, backgroundColor: '#ffff', padding: 10, borderWidth: 0.5, borderRadius: 8, marginTop: 4 }} />
           </View>
-         
-    
-       
+
+
+
 
 
 
         </View>
 
         <Pressable
-onPress={handleFomValidation}
+          onPress={handleFomValidation}
 
           style={[styles.shadowProp, {
             backgroundColor: '#1aca78',
@@ -403,7 +394,7 @@ onPress={handleFomValidation}
               fontWeight: "bold",
             }}
           >
-           Submit Form
+            Submit Form
           </Text>
         </Pressable>
 
@@ -465,7 +456,7 @@ const styles = StyleSheet.create({
     width: '50%',
     height: 50,
     flexDirection: 'column',
-   
+
   },
   label: {
     fontWeight: 'bold',
@@ -482,13 +473,13 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor:'transparent',
+    backgroundColor: 'transparent',
     borderWidth: 0.5,
     height: 40,
     justifyContent: 'center',
     borderRadius: 8,
     textAlign: 'center',
-   width:20,
-  
+    width: 20,
+
   },
 });

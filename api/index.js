@@ -36,9 +36,9 @@ app.listen(port, () => {
 mongoose.connect("mongodb://localhost:27017/Rehnuma", {
 
 }).then(() => {
-    console.log("connected to Mongodb")
+  console.log("connected to Mongodb")
 }).catch((err) => {
-    console.log("error connecting to Mongodb", err)
+  console.log("error connecting to Mongodb", err)
 
 })
 
@@ -214,12 +214,12 @@ app.post("/donations", async (req, res) => {
 
 
   try {
-    const { userId,donationItem } =
+    const { userId, donationItem } =
       req.body;
 
- 
-      const Id =jwt.decode(userId)
-      decodedId= Id.userId
+
+    const Id = jwt.decode(userId)
+    decodedId = Id.userId
 
     const user = await User.findById(decodedId);
     // if (!user) {
@@ -232,7 +232,7 @@ app.post("/donations", async (req, res) => {
     // create a new Order
     const donation = new Donation({
       user: decodedId,
-      donations:donationItem,
+      donations: donationItem,
     });
     console.log(donation.donations)
 
@@ -251,8 +251,8 @@ app.get("/profile/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     console.log(userId)
-    const Id =jwt.decode(userId)
-    decodedId= Id.userId
+    const Id = jwt.decode(userId)
+    decodedId = Id.userId
 
     const user = await User.findById(decodedId);
 
@@ -266,175 +266,205 @@ app.get("/profile/:userId", async (req, res) => {
   }
 });
 
-app.get("/donations/:userId",async(req,res) => {
-  try{
+app.get("/donations/:userId", async (req, res) => {
+  try {
     const userId = req.params.userId;
-    const Id =jwt.decode(userId)
-    decodedId= Id.userId
+    const Id = jwt.decode(userId)
+    decodedId = Id.userId
 
-    const donation = await Donation.find({user:decodedId}).populate("user");
+    const donation = await Donation.find({ user: decodedId }).populate("user");
     // console.log(donation)
 
-    if(!donation || donation.length === 0){
-      return res.status(404).json({message:"No orders found for this user"})
+    if (!donation || donation.length === 0) {
+      return res.status(404).json({ message: "No orders found for this user" })
     }
 
     res.status(200).json({ donation });
-  } catch(error){
-    res.status(500).json({ message: "Error"});
+  } catch (error) {
+    res.status(500).json({ message: "Error" });
   }
 })
 
 // Get students List
 
-app.get("/students",async (req,res)=>{
-  try{
+app.get("/students", async (req, res) => {
+  try {
     const beneficiaries = await Beneficiary.find({});
-      if(beneficiaries==""){
-        res.status(200).json({
-          message:"No students found"
-        })
-      }
-      else{
-        res.status(200).json({
-          beneficiaries
-        });
-
-      }
+    if (beneficiaries == "") {
+      res.status(200).json({
+        message: "No students found"
+      })
     }
-  catch(error){
+    else {
+      res.status(200).json({
+        beneficiaries
+      });
+
+    }
+  }
+  catch (error) {
     res.status(500).json({
-      errorMessage:error.message
+      errorMessage: error.message
     });
   }
 })
 
 // ENDPOINT TO ADD STUDENT
 
-app.post("/addStudent/:userId",async (req,res)=>{
-  try{
-    const {
+app.post("/addStudent/:userId", async (req, res) => {
+
+  try {
+
+    const { userId,
       name,
+      image,
       mobileNumber,
       alternateMobileNumber,
       collegeName,
-      address,
       field,
-      stream,
-      status,
-      selectionStatus
+      branch,
+      address,
     } = req.body
-    const user = req.params.userId;
-    console.log("Params \n" + JSON.stringify(req.params.userId)  + "\nNow req.body  \n" + JSON.stringify(req.body))
+
+
+    const Id = jwt.decode(userId)
+    decodedId = Id.userId
+
+console.log('hii')
+    const data ={
+      decodedId:decodedId,
+      name:name,
+      image:image,
+      mobileNumber:mobileNumber,
+      alternateMobileNumber:alternateMobileNumber,
+      collegeName:collegeName,
+      field:field,
+      branch:branch,
+      address:address,
+      donationStatus: {
+        "totalAmount": field=='Medical'?40000:20000,
+        "amountPending":field=='Medical'?40000:20000,
+        "status": "Pending"
+      },
+      document:'',
+      selectionStatus:'Under Review',
+    }
+
+    console.log(data)
+    // console.log("Params \n" + JSON.stringify(req.params.userId)  + "\nNow req.body  \n" + JSON.stringify(req.body))
     // const user = User.findById(userId)
     // const token = jwt.sign({ userId: user._id }, secretKey);
     const newStudent = new Beneficiary({
-      user,
+      decodedId,
       name,
+      image,
       mobileNumber,
       alternateMobileNumber,
       collegeName,
-      address,
       field,
-      status,
-      donationStatus:{
-        "totalAmount":50000,
-        "amountPending":50000,
-        "status":"Pending"
+      branch,
+      address,
+      donationStatus: {
+        "totalAmount": field=='Medical'?40000:20000,
+        "amountPending": field=='Medical'?40000:20000,
+        "status": "Pending"
       },
-      selectionStatus
+      document:'',
+      selectionStatus:'Under Review',
     })
     await newStudent.save();
-    res.status(201).json({
-      message:"New Student Added Successfully"
+    res.status(200).json({
+      message: "New Student Added Successfully"
     })
 
   }
-  catch(error){
+  catch (error) {
     res.status(500).json({
-      message:error.message
+      message: error.message
     })
   }
 })
 
 // ENDPOINT to GET all Notificatiions that are "Under Review"
 
-app.get("/toReview" ,async (req,res)=>{
-        try{
-      
-          const beneficiaries = await Beneficiary.find({
-            selectionStatus:"Under Review"
-          });
-          if(!beneficiaries){
-            res.status(200).json({
-              message:"No beneficiaries to be reviewed"
-            })
-          }
-          else{
-            res.status(200).json({
-              beneficiaries
-            })
-          }
-        }
-        catch(error){
-          res.status(500).json({
-            message:error.message
-          })
-        }
+app.get("/toReview", async (req, res) => {
+  try {
+
+    const beneficiaries = await Beneficiary.find({
+      selectionStatus: "Under Review"
+    });
+    if (!beneficiaries) {
+      res.status(200).json({
+        message: "No beneficiaries to be reviewed"
+      })
+    }
+    else {
+      res.status(200).json({
+        beneficiaries
+      })
+    }
+  }
+  catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
 })
 
 
 // Endpoint to ACCEPT or REJECT Beneficiary Application [ only for Admin  ]
 
-app.post("/toReview/:mobileNumber",async (req,res)=>{
-      try{
-        const adminSelection = req.body;
-        // console.log(adminSelection.selection)
-        const mobileNumber = req.params.mobileNumber;
-        const updated = await Beneficiary.findOneAndUpdate({
-          mobileNumber:mobileNumber
-        },{
-          selectionStatus:adminSelection.selection
-        },{
-          new:true
-        })
-        await updated.save();
-        if(!updated){
-          res.status(200).json({
-            message:"Record not found"
-          })
-        }
-        else {
-          res.status(200).json({
-            message:"Status updated successfully"
-          })
-        }
-      }
-      catch(error){
-        res.status(500).json({
-          message:error.message
-        })
-      }
-} )
+app.post("/toReview/:StudentId", async (req, res) => {
+  
+  try {
+    const adminSelection = req.body;
+  
+    const StudentID = req.params.StudentId;
+    console.log(StudentID)
+    const updated = await Beneficiary.findOneAndUpdate({
+      _id: StudentID
+    }, {
+      selectionStatus: adminSelection.selection
+    }, {
+      new: true
+    })
+    await updated.save();
+    if (!updated) {
+      res.status(200).json({
+        message: "Record not found"
+      })
+    }
+    else {
+      res.status(200).json({
+        message: "Status updated successfully"
+      })
+    }
+  }
+  catch (error) {
+    res.status(500).json({
+      message: error.message
+    })
+  }
+})
 
 
 
 // ENDPOINT OF PAYMENT GATEWAY
 
 app.post('/donate', async (req, res) => {
-    try {
-        const order = await razorpay.orders.create({
-            amount: req.body.amount * 100,
-            currency: 'INR', 
-            receipt: 'donation_receipt',
-            payment_capture: 1 
-        });
- 
-        res.json(order);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Failed to create donation order');
-    }
+  try {
+    const order = await razorpay.orders.create({
+      amount: req.body.amount * 100,
+      currency: 'INR',
+      receipt: 'donation_receipt',
+      payment_capture: 1
+    });
+
+    res.json(order);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to create donation order');
+  }
 });
 
 // endpoint for verifying payment
@@ -444,21 +474,21 @@ app.post('/verifyDonation', (req, res) => {
   const signature = req.headers['x-razorpay-signature'];
 
   try {
-      const event = razorpay.webhooks.validate(body, signature);
+    const event = razorpay.webhooks.validate(body, signature);
 
-      switch (event.event) {
-          case 'payment.captured':
-              console.log('Payment captured:', event.payload);
-              break;
-          case 'payment.failed':
-              console.log('Payment failed:', event.payload);
-              break;
-      }
+    switch (event.event) {
+      case 'payment.captured':
+        console.log('Payment captured:', event.payload);
+        break;
+      case 'payment.failed':
+        console.log('Payment failed:', event.payload);
+        break;
+    }
 
-      res.json({ status: 'success' });
+    res.json({ status: 'success' });
   } catch (error) {
-      console.error('Error:', error);
-      res.status(400).send(' Error');
+    console.error('Error:', error);
+    res.status(400).send(' Error');
   }
 });
 

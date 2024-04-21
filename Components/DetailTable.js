@@ -8,6 +8,8 @@ const DetailTable = () => {
 
     const route = useRoute();
     const { studentData } = route.params;
+
+    console.log(studentData)
     const tableData = {
         tableHead: ['Attribute', "Detail",],
         tableData: [

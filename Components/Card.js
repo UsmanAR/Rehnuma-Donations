@@ -4,16 +4,20 @@ import ProgressBar from 'react-native-progress/Bar'
 import img from '../assets/image.jpg'
 import { useNavigation } from '@react-navigation/native'
 
+import avatar from "../assets/avatar.jpg"
+
 const Card = ({data}) => {
     const navigation = useNavigation();
     const dontaionProgess = data.donationStatus.amountPending / data.donationStatus.totalAmount
     const dontaionDone =  data.donationStatus.totalAmount -data.donationStatus.amountPending
 
+  
+
   return (
     <Pressable 
         onPress={() => navigation.navigate("Info",{studentData:data})}
         style={[styles.CardProp, { flexDirection: 'column', width: 250, height: 350 }]}>
-            <Image source={{uri:data?.image}} style={{ width: 220, height: 150, margin: 18, borderRadius: 10 }} />
+            <Image   source={data?.image=='NA' ?   avatar:   { uri: data.image }  } style={{ width: 220, height: 150, margin: 18, borderRadius: 10,  }} />
             <View style={{ marginHorizontal: 18 }}>
 
                 <Text style={{ fontWeight: 700, fontSize: 15 }}>{data.name.firstName} {data.name.lastName}</Text>

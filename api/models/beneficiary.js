@@ -1,12 +1,12 @@
 const mongoose = require("mongoose")
 
 const beneficiarySchema = new  mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         require: true,
       },
-   studentInfo:{
+
     name:{
         firstName:{
             type:String,
@@ -34,6 +34,15 @@ const beneficiarySchema = new  mongoose.Schema({
     collegeName : {
         type:String,
         required: true
+    },
+    field:{
+        type:String,
+        enum:['Medical','Engineering'],
+        required:true
+    },
+    branch:{
+        type:String,
+        required:true
     },
     address:{
         landmark : {
@@ -63,11 +72,7 @@ const beneficiarySchema = new  mongoose.Schema({
             required:true
         }
     },
-    field:{
-        type:String,
-        enum:['Medical','Engineering'],
-        required:true
-    },
+
     Documents:{
         
     },
@@ -77,8 +82,8 @@ const beneficiarySchema = new  mongoose.Schema({
         required:true,
         default:'Under Review'
     }
-   }
-})
+   
+},{timestamps:true})
 
 const Beneficiary = mongoose.model("Beneficiary",beneficiarySchema);
 

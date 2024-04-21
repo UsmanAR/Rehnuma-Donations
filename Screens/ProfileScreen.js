@@ -58,7 +58,7 @@ const ProfileScreen = () => {
       try {
 
         const response = await axios.get(
-          `http:192.168.19.200:8000/profile/${userId}`
+          `http:192.168.153.200:8000/profile/${userId}`
         );
 
 
@@ -91,7 +91,7 @@ const ProfileScreen = () => {
 
       try {
 
-        const response = await axios.get(`http:192.168.19.200:8000/donations/${userId}`);
+        const response = await axios.get(`http:192.168.153.200:8000/donations/${userId}`);
         const donation = response.data.donation;
         setDonation(donation)
         // console.log(donation[0].donations.image)
@@ -117,16 +117,24 @@ const ProfileScreen = () => {
       <View style={{
         flexDirection: "row",
         alignItems: "center",
+        flexWrap:'wrap',
         gap: 10,
-        marginTop: 12,
+        marginTop: 20,
+      
+        width:'100%'
+
       }}>
         <Pressable style={{
           padding: 10,
           backgroundColor: "#E0E0E0",
           borderRadius: 25,
-          flex: 1,
+         
+          width:"48%",
+          paddingVertical: 15,
+          paddingHorizontal: 5,
+        
         }} 
-        onPress={() =>navigation.navigate('Analytics')}
+        onPress={() =>navigation.navigate('Analytics',{user:user,donationdata:donations})}
         >
           <Text style={{ textAlign: "center" }}>See Analytics</Text>
         </Pressable>
@@ -134,11 +142,23 @@ const ProfileScreen = () => {
           padding: 10,
           backgroundColor: "#E0E0E0",
           borderRadius: 25,
-          flex: 1,
+         
+          width:'48%'
         }}>
           <Text
             onPress={logout}
             style={{ textAlign: "center" }}>Logout</Text>
+        </Pressable>
+        <Pressable style={{
+          padding: 10,
+          backgroundColor: "#E0E0E0",
+          borderRadius: 25,
+       
+          width:'48%'
+        }}>
+          <Text
+           onPress={() =>navigation.navigate('History')}
+            style={{ textAlign: "center" }}>History</Text>
         </Pressable>
       </View>
 

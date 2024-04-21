@@ -6,6 +6,7 @@ import Notification from '../Components/Notification'
 import axios from 'axios';
 
 
+
 const NotificationScreen = () => {
 
 
@@ -21,14 +22,12 @@ const NotificationScreen = () => {
 
 
 
-
-
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http:192.168.19.200:8000/toReview");
-        console.log(response.data)
+        const response = await axios.get("http:192.168.153.200:8000/toReview");
+        setNotification(response.data.beneficiaries)
+       console.log(notificaions)
         // setLoader(false)
         // console.log(response.data)
       } catch (error) {
@@ -45,20 +44,10 @@ const NotificationScreen = () => {
       <ScrollView >
 
         <View style={{ gap: 10, display: 'flex', flexDirection: 'column' }}>
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
-          <Notification />
+        {notificaions.map((item,index) =>{
+        return  <Notification  key={index} data= {item}/>
+        })}
+      
         </View>
 
 

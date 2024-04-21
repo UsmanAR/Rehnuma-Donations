@@ -1,8 +1,23 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import { LineChart } from 'react-native-chart-kit';
+import { useRoute } from '@react-navigation/native';
 
 const AnalyticsScreen = () => {
 
+
+const route = useRoute();
+const {  donationdata } = route.params;
+
+const chartData = donationdata.map(item => ({
+  amount: item.donations.donatedAmount,
+  date: new Date(item.updatedAt).toLocaleDateString() // Convert updatedAt to date format
+}));
+
+const amounts = chartData.map(item => item.amount);
+const dates = chartData.map(item => item.date);
+
+console.log(dates)
 
     const data = [
         { title: 'Total Student', value: '18500' },
@@ -25,6 +40,41 @@ const AnalyticsScreen = () => {
           </View>
         ))}
       </View>
+      <View>
+  <Text>Bezier Line Chart</Text>
+  <LineChart
+    data={{
+      labels: dates, // Use dates as labels
+      datasets: [{ data: amounts }]
+    }}
+    width={Dimensions.get("window").width} // from react-native
+    height={220}
+    yAxisLabel="₹"
+    yAxisSuffix=""
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundColor: "#1dd881",
+      backgroundGradientFrom: "#1dd881",
+      backgroundGradientTo: "#1de811",
+      decimalPlaces: 1, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      style: {
+        borderRadius: 16
+      },
+      propsForDots: {
+        r: "6",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+</View>
     </ScrollView>
   </SafeAreaView>
   )

@@ -26,7 +26,7 @@ const RagisterScreen = () => {
         // send a POST  request to the backend API to register the user
        
         axios
-            .post("http:192.168.19.200:8000/register", user)
+            .post("http:192.168.153.200:8000/register", user)
             .then((response) => {
                 console.log(response);
                 Alert.alert(

@@ -33,7 +33,7 @@ app.listen(port, () => {
   console.log("Server is running on port 8000");
 });
 
-mongoose.connect("mongodb://localhost:27017/Rehnuma", {
+mongoose.connect("mongodb://uvu86owakzz6c5uxwqau:1YRACAN1hkWf4NfNdX7@busbazj76wn7zppxh3dv-mongodb.services.clever-cloud.com:2528/busbazj76wn7zppxh3dv", {
 
 }).then(() => {
   console.log("connected to Mongodb")
@@ -347,7 +347,7 @@ console.log('hii')
         "status": "Pending"
       },
       document:'',
-      selectionStatus:'Under Review',
+      selectionStatus:'Accepted',
     }
 
     console.log(data)
@@ -420,7 +420,7 @@ app.post("/toReview/:StudentId", async (req, res) => {
     const adminSelection = req.body;
   
     const StudentID = req.params.StudentId;
-    console.log(StudentID)
+    // console.log(StudentID)
     const updated = await Beneficiary.findOneAndUpdate({
       _id: StudentID
     }, {

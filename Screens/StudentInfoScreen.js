@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { UserType } from '../Context/UserContext';
 import axios from 'axios';
 
-
+import RazorpayCheckout from 'react-native-razorpay';
 
 
 
@@ -49,7 +49,7 @@ const StudentInfoScreen = () => {
 
             try {
                 const response = await axios.get(
-                    `http:192.168.153.200:8000/profile/${userId}`
+                    `https://rehnuma-donations.onrender.com/profile/${userId}`
                 );
 
 
@@ -76,12 +76,13 @@ const StudentInfoScreen = () => {
 
     const route = useRoute();
     const { studentData } = route.params;
-    // console.log(studentData)
+    // console.log(studentData.field)
 
-    const dontaionProgess = studentData.donationStatus.amountPending / studentData.donationStatus.totalAmount
+    const dontaionProgess = 1-(studentData.donationStatus.amountPending / studentData.donationStatus.totalAmount)
     const dontaionDone = studentData.donationStatus.totalAmount - studentData.donationStatus.amountPending
-
+// console.log('studentData://////////',studentData)
     const [data, setData] = useState({
+       
         userId: userId,
         donationItem:{
             name:{
@@ -143,15 +144,16 @@ const StudentInfoScreen = () => {
         donationItem:data.donationItem,
       };
 
+
     //   console.log(orderData)
      
-      const response = await axios.post( "http:192.168.153.200:8000/donations", orderData
+      const response = await axios.post( "https://rehnuma-donations.onrender.com/donations", orderData
       );
       if (response.status === 200) {
         setModalVisible(!modalVisible)
         navigation.navigate("DonationDone");
         // console.log('hello')
-        console.log("order created successfully", response.data);
+        console.log("Donated successfully", response.data);
       } else {
         console.log("error creating order", response.data);
       }
@@ -161,6 +163,30 @@ const StudentInfoScreen = () => {
       }
     }
 
+
+    const pay =async() =>{
+        console.log('hii')
+        try {
+            const options = {
+                description: "Adding To Wallet",
+                currency: "INR",
+                name: "Amazon",
+                key: "rzp_test_ecY5QsbcAqzxTT",
+                amount:  100,
+                prefill: {
+                  email: "void@razorpay.com",
+                  contact: "9191919191",
+                  name: "RazorPay Software",
+                },
+                theme: { color: "#F37254" },
+              };
+
+              const data = await RazorpayCheckout.open(options)
+              Alert.alert(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
 
     const handleBackButton = () => {
@@ -211,12 +237,7 @@ const StudentInfoScreen = () => {
                         <Text style={{ fontWeight: 500, fontSize: 12, marginVertical: 5, color: "#C0C0C0" }}>Usman is Needy Person, He Got Placement but he need more MONEY
                             Usman is Needy Person, He Got Placement but he need more MONEY
                             Usman is Needy Person, He Got Placement but he need more MONEY
-                            Usman is Needy Person, He Got Placement but he need more MONEY
-                            Usman is Needy Person, He Got Placement but he need more MONEY
-                            Usman is Needy Person, He Got Placement but he need more MONEY
-                            Usman is Needy Person, He Got Placement but he need more MONEY
-                            Usman is Needy Person, He Got Placement but he need more MONEY
-                            Usman is Needy Person, He Got Placement but he need more MONEY
+                          
                         </Text>
                         <DetailTable data={studentData} />
                         <View style={{ marginVertical: 10 }}>
@@ -400,7 +421,7 @@ const StudentInfoScreen = () => {
                             </Pressable>
 
                             <Pressable
-                            onPress={handlePressDonate}
+                            onPress={pay}
 
                                 style={[styles.shadowProp, {
                                     backgroundColor: "#1aca78",

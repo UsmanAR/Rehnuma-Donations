@@ -38,7 +38,7 @@ const LoginScreen = () => {
     };
 
     axios
-      .post("http:192.168.153.200:8000/login", user)
+      .post("https://rehnuma-donations.onrender.com/login", user)
       .then((response) => {
         // console.log(response);
         const token = response.data.token;

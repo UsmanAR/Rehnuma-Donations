@@ -9,16 +9,16 @@ import { useNavigation } from '@react-navigation/native'
 const Notification = ({ data }) => {
 
   const navigation = useNavigation()
-const [reviewd,setReviwed] =useState(data.selectionStatus)
+  const [reviewd, setReviwed] = useState(data.selectionStatus)
   console.log(data)
   const handleResponse = async (e) => {
     try {
 
       console.log(e)
-      const response = await axios.post(`http:192.168.153.200:8000/toReview/${data._id}`, { selection: e })
+      const response = await axios.post(`https://rehnuma-donations.onrender.com/toReview/${data._id}`, { selection: e })
 
       if (response.status == 200) {
-     setReviwed(e);
+        setReviwed(e);
         console.log("order created successfully", response.data);
       } else {
         console.log("error creating order", response.data);
@@ -43,7 +43,7 @@ const [reviewd,setReviwed] =useState(data.selectionStatus)
             </Text> from <Text style={{ fontWeight: "bold" }}>{data.collegeName}</Text>
           </Text>
         </View>
-       {reviewd=='Under Review' ?<View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 20, marginVertical: 10 }}>
+        {reviewd == 'Under Review' ? <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 20, marginVertical: 10 }}>
           <Pressable
 
             onPress={() => handleResponse('Accepted')}
@@ -77,7 +77,7 @@ const [reviewd,setReviwed] =useState(data.selectionStatus)
               fontSize: 16,
               fontWeight: "bold",
             }}>Reject</Text></Pressable>
-        </View>:<Text style={{fontWeight:"600",textAlign:'center'}}>Your <Text  style={{color:reviewd=='Accepted'? '#1aca78':'red'}}>{reviewd}</Text>This Application</Text>}
+        </View> : <Text style={{ fontWeight: "600", textAlign: 'center' }}>Your <Text style={{ color: reviewd == 'Accepted' ? '#1aca78' : 'red' }}>{reviewd}</Text>This Application</Text>}
 
       </View>
 

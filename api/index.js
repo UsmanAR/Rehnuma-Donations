@@ -225,21 +225,52 @@ app.post("/donations", async (req, res) => {
     // if (!user) {
     //   return res.status(404).json({ message: "User not found" });
     // }
-
-    //create an array of product objects from the cart Items
-
-
-    // create a new Order
+    // console.log("This is id "  + donationItem.studentId)
+    const {
+      donationStatus
+    } =await  Beneficiary.findById(donationItem.studentId).select("donationStatus")
+    var totalAmount = donationStatus.totalAmount;
+    var pendingAmount = Number(donationStatus.amountPending)
+    console.log("Pendng amount type and vlaue " + typeof(pendingAmount) + " " + pendingAmount + " " + donationItem.donatedAmount)
+    var newPendingAmount = Number(pendingAmount) - Number(donationItem.donatedAmount);
+    var completed = false;
+    if(newPendingAmount==0) completed = true;
+    if(completed){
+      const updatedDonation =await Beneficiary.findOneAndUpdate({
+        _id:donationItem.studentId
+      },{
+        donationStatus:{
+          amountPending:0,
+          status:"Completed"
+        }
+      })
+      await updatedDonation.save();
+      
+    }
+    else {
+      const updatedDonation =await  Beneficiary.findOneAndUpdate({
+        _id:donationItem.studentId
+      },{
+        donationStatus:{
+          amountPending:Number(newPendingAmount),
+        }
+      })
+      await updatedDonation.save();
+      res.status(200).json({
+        message:"Donation Amount updated successfully"
+      })
+    }
+   
     const donation = new Donation({
       user: decodedId,
       donations: donationItem,
-    });
-    console.log(donation.donations)
+      });
+   // console.log(donation.donations)
 
 
     await donation.save();
 
-    res.status(200).json({ message: "Order created successfully!" });
+    res.status(200).json({ message: "Donation done successfully!" });
   } catch (error) {
     console.log("error creating orders", error);
     res.status(500).json({ message: "Error creating orders" });
@@ -491,4 +522,3 @@ app.post('/verifyDonation', (req, res) => {
     res.status(400).send(' Error');
   }
 });
-

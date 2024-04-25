@@ -25,6 +25,8 @@ import AnalyticsScreen from '../Screens/AnalyticsScreen';
 import { MaterialIcons } from "@expo/vector-icons";
 import History from '../Screens/History';
 import HistoryFullScreen from '../Screens/HistoryFullScreen';
+import Test from '../Components/Test';
+import StudentAddDone from '../Screens/StudentAddDone';
 
 const StackNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -130,7 +132,7 @@ const StackNavigator = () => {
   }
   return <NavigationContainer>
 
-    <Stack.Navigator initialRouteName='Login'>
+    <Stack.Navigator initialRouteName='Main'>
 
 
       <Stack.Screen
@@ -177,6 +179,11 @@ const StackNavigator = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="StudentAddDone"
+        component={StudentAddDone}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="DonatedScreen"
         component={DonatedScreen}
         options={{ headerShown: false }}
@@ -205,6 +212,11 @@ const StackNavigator = () => {
          <Stack.Screen
         name="HistoryFullPage"
         component={HistoryFullScreen}
+
+      />
+         <Stack.Screen
+        name="Test"
+        component={Test}
 
       />
         <Stack.Screen  headerShown={false} options={{animationEnabled:true,presentation:'transparentModal', headerShown:false,

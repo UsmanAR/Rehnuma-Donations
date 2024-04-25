@@ -9,6 +9,7 @@ import img from '../assets/image.jpg'
 import ProgressBar from 'react-native-progress/Bar'
 import RehnumaLogo from '../assets/RehnumaLogo.png'
 import { MaterialIcons } from '@expo/vector-icons';
+import avatar from "../assets/avatar.jpg"
 
 
 
@@ -51,6 +52,7 @@ const ProfileScreen = () => {
   const [user, setUser] = useState("");
   const [donations, setDonation] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [Error, setError] = useState('')
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -58,7 +60,7 @@ const ProfileScreen = () => {
       try {
 
         const response = await axios.get(
-          `http:192.168.153.200:8000/profile/${userId}`
+          `https://rehnuma-donations.onrender.com/profile/${userId}`
         );
 
 
@@ -69,6 +71,8 @@ const ProfileScreen = () => {
 
 
       } catch (error) {
+        setError(Error)
+        setLoading(false)
         console.log("error", error);
       }
     };
@@ -91,13 +95,15 @@ const ProfileScreen = () => {
 
       try {
 
-        const response = await axios.get(`http:192.168.153.200:8000/donations/${userId}`);
+        const response = await axios.get(`https://rehnuma-donations.onrender.com/donations/${userId}`);
         const donation = response.data.donation;
         setDonation(donation)
         // console.log(donation[0].donations.image)
 
         setLoading(false);
       } catch (error) {
+        setError(Error)
+     setLoading(false)
         console.log("error", error);
       }
     };
@@ -109,7 +115,7 @@ const ProfileScreen = () => {
 
   return (
 
-    <ScrollView style={{ paddingTop: 30, flex: 1, backgroundColor: "white" }}>
+    <ScrollView style={{ paddingTop: 70, flex: 1, backgroundColor: "white" }}>
       <Text style={{ fontSize: 16, fontWeight: "bold" }}>Welcome {user?.name}</Text>
 
 
@@ -172,7 +178,7 @@ const ProfileScreen = () => {
         </Pressable>
 
       </View>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false} style={Error?{justifyContent:'center',alignItems:'center',border:1,borderWidth:1}:''}>
 
         {loading ? <Loader /> : donations.length > 0 ? (
           donations.map((donation, index) => (
@@ -181,7 +187,8 @@ const ProfileScreen = () => {
               key={index}
               onPress={() => navigation.navigate("DonatedScreen", { studentData: donation.donations })}
               style={[styles.CardProp, { flexDirection: 'column', width: 250, height: 350 }]}>
-              <Image source={{ uri: donation.donations.image }} style={{ width: 220, height: 150, margin: 18, borderRadius: 10 }} />
+              {/* <Image source={{ uri: donation.donations.image }} style={{ width: 220, height: 150, margin: 18, borderRadius: 10 }} /> */}
+              <Image  source={donation.donations?.image=='NA' ?   avatar:   { uri: donation.donations.image }  } style={{ width: 220, height: 150, margin: 18, borderRadius: 10 }} />
               <View style={{ marginHorizontal: 18 }}>
 
                 <Text style={{ fontWeight: 700, fontSize: 15 }}>{donation.donations.name.firstName} {donation.donations.name.lastName}</Text>
@@ -203,7 +210,7 @@ const ProfileScreen = () => {
             </Pressable>
           ))
         ) : (
-          <Text>No Donations found</Text>
+          <Text style={{textAlign:'center',width:'100%' }}>No Donations found</Text>
         )}
       </ScrollView>
     </ScrollView>

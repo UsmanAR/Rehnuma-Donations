@@ -188,7 +188,7 @@ const ModalScreen = () => {
     const fetchUser = async () => {
       const token = await AsyncStorage.getItem("authToken");
       setUserId(token)
-      // console.log(userId)
+      console.log(userId)
 
 
 
@@ -205,11 +205,12 @@ const ModalScreen = () => {
 
   const handleAddStudent = async () => {
     try {
-      const response = await axios.post(`http:192.168.153.200:8000/addStudent/${userId}`, formdata
+      console.log('hii')
+      const response = await axios.post(`https://rehnuma-donations.onrender.com/addStudent/${userId}`, formdata
       );
       if (response.status === 200) {
         setModalVisible(!isModalVisible)
-        navigation.navigate("DonationDone");
+        navigation.navigate("StudentAddDone");
         // console.log('hello')
         console.log("order created successfully", response.data);
       } else {

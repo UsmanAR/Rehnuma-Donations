@@ -8,7 +8,7 @@ import avatar from "../assets/avatar.jpg"
 
 const Card = ({data}) => {
     const navigation = useNavigation();
-    const dontaionProgess = data.donationStatus.amountPending / data.donationStatus.totalAmount
+    const dontaionProgess = 1- data.donationStatus.amountPending / data.donationStatus.totalAmount
     const dontaionDone =  data.donationStatus.totalAmount -data.donationStatus.amountPending
 
   
@@ -24,7 +24,7 @@ const Card = ({data}) => {
                 <Text style={{ fontWeight: 500, fontSize: 12, marginVertical: 5, color: "#C0C0C0" }}>Usman is Needy Person, He Got Placement but he need more MONEY</Text>
                 <View style={{ marginVertical: 10 }}>
 
-                    <ProgressBar progress={dontaionProgess}
+                    {/* <ProgressBar progress={dontaionProgess}
                         color='#1aca78'
                         width={200}
                         height={10}
@@ -32,7 +32,7 @@ const Card = ({data}) => {
 
 
 
-                    />
+                    /> */}
                 </View>
                 <View style={{ flexDirection: 'row', justifyContent: "space-between", alignItems: 'center' }}>
 

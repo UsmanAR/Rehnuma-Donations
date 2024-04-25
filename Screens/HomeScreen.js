@@ -50,9 +50,9 @@ const HomeScreen = () => {
 
       try {
         const response = await axios.get(
-          `https://rehnuma-donations.onrender.com/profile/${userId}`
+          `http://192.168.69.200:8000/profile/${userId}`
         );
-        console.log(response)
+        // console.log(response)
 
         const { user } = response.data;
 
@@ -68,10 +68,11 @@ const HomeScreen = () => {
   }, [userId]);
 
   const fetchData = async () => {
+// console.log('hi')
     try {
      
-      const response = await axios.get("https://rehnuma-donations.onrender.com/students");
-      // console.log(response)
+      const response = await axios.get("http://192.168.69.200:8000/students");
+      // console.log(response.data)
       setStudents(response.data.beneficiaries.filter((item)=>item.selectionStatus != 'Under Review'));
       setLoader(false)
       // console.log(response.data)

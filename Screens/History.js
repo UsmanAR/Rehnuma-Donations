@@ -15,7 +15,7 @@ const History = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get("https://rehnuma-donations.onrender.com/students");
+            const response = await axios.get("http://192.168.69.200:8000/students");
             setDecision(response.data.beneficiaries);
             setLoader(false)
             console.log(decision)

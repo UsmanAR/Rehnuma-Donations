@@ -1,4 +1,4 @@
-import { Image, KeyboardAvoidingView, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, BackHandler, Alert } from 'react-native'
+import { Image, KeyboardAvoidingView, Platform, Pressable, SafeAreaView, Linking,ScrollView, StyleSheet, Text, TextInput, View, BackHandler, Alert } from 'react-native'
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 
 import img from '../assets/image.jpg'
@@ -49,7 +49,7 @@ const StudentInfoScreen = () => {
 
             try {
                 const response = await axios.get(
-                    `https://rehnuma-donations.onrender.com/profile/${userId}`
+                    `http://192.168.69.200:8000/profile/${userId}`
                 );
 
 
@@ -134,7 +134,11 @@ const StudentInfoScreen = () => {
       }, [value]);
 
     //   console.log(data.donationItem.Donated);
-
+    loadInBrowser = () => {
+        let url = `https://payments-test.cashfree.com/forms/rehnuma-donation`
+       let x= Linking.openURL(url).catch(err => console.error("Couldn't load page", err));
+       console.log(x)
+      };
     const handlePressDonate = async() => {
       try {
 
@@ -144,10 +148,10 @@ const StudentInfoScreen = () => {
         donationItem:data.donationItem,
       };
 
-
+   loadInBrowser();
     //   console.log(orderData)
      
-      const response = await axios.post( "https://rehnuma-donations.onrender.com/donations", orderData
+      const response = await axios.post( "http://192.168.69.200:8000/donations", orderData
       );
       if (response.status === 200) {
         setModalVisible(!modalVisible)
@@ -421,7 +425,7 @@ const StudentInfoScreen = () => {
                             </Pressable>
 
                             <Pressable
-                            onPress={pay}
+                            onPress={handlePressDonate}
 
                                 style={[styles.shadowProp, {
                                     backgroundColor: "#1aca78",

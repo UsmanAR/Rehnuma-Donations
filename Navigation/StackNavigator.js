@@ -4,10 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import LoginScreen from '../Screens/LoginScreen'
-import RagisterScreen from '../Screens/RagisterScreen'
-import HomeScreen from '../Screens/HomeScreen'
-import ProfileScreen from '../Screens/ProfileScreen';
-import CarouselPage from '../Components/CarouselPage';
+import RagisterScreen from '../Screens/RagisterScreen.js'
+import HomeScreen from '../Screens/HomeScreen.js'
+import ProfileScreen from '../Screens/ProfileScreen.js';
 import Order from '../Screens/Order';
 
 

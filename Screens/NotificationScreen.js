@@ -15,8 +15,10 @@ const NotificationScreen = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+     
       try {
-        const response = await axios.get("https://rehnuma-donations.onrender.com/toReview");
+        const response = await axios.get("http://192.168.69.200:8000/toReview");
+        console.log(response.data)
         setNotification(response.data.beneficiaries)
        console.log(notificaions)
         // setLoader(false)

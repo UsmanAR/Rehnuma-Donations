@@ -15,7 +15,8 @@ const Notification = ({ data }) => {
     try {
 
       console.log(e)
-      const response = await axios.post(`https://rehnuma-donations.onrender.com/toReview/${data._id}`, { selection: e })
+      const response = await axios.post(`http://192.168.69.200:8000/toReview/${data._id}`, { selection: e })
+      console.log(response)
 
       if (response.status == 200) {
         setReviwed(e);

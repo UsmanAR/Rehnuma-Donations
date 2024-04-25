@@ -26,7 +26,7 @@ const RagisterScreen = () => {
         // send a POST  request to the backend API to register the user
        
         axios
-            .post("https://rehnuma-donations.onrender.com/register", user)
+            .post("http://192.168.69.200:8000/register", user)
             .then((response) => {
                 console.log(response);
                 Alert.alert(

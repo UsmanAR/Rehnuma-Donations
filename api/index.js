@@ -33,7 +33,7 @@ app.listen(port, () => {
   console.log("Server is running on port 8000");
 });
 
-mongoose.connect("mongodb://uvu86owakzz6c5uxwqau:1YRACAN1hkWf4NfNdX7@busbazj76wn7zppxh3dv-mongodb.services.clever-cloud.com:2528/busbazj76wn7zppxh3dv", {
+mongoose.connect("mongodb://localhost:27017/Rehnuma", {
 
 }).then(() => {
   console.log("connected to Mongodb")
@@ -361,7 +361,7 @@ app.post("/addStudent/:userId", async (req, res) => {
     const Id = jwt.decode(userId)
     decodedId = Id.userId
 
-console.log('hii')
+// console.log('hii')
     const data ={
       decodedId:decodedId,
       name:name,
@@ -378,7 +378,7 @@ console.log('hii')
         "status": "Pending"
       },
       document:'',
-      selectionStatus:'Accepted',
+      selectionStatus:'Under Review',
     }
 
     console.log(data)
